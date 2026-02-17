@@ -1,20 +1,17 @@
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { Stack } from "@/components/stack";
-import { Projects } from "@/components/projects";
-import { Connect } from "@/components/connect";
-import { getRepos } from "@/lib/github";
+import { Highlights } from "@/components/highlights";
+import { Vision } from "@/components/vision";
+import { Contact } from "@/components/contact";
 
-export default async function Home() {
-  const projects = await getRepos();
-
+export default function Home() {
   return (
     <>
       <Hero />
       <About />
-      <Stack />
-      <Projects projects={projects} />
-      <Connect />
+      <Highlights />
+      <Vision />
+      <Contact />
     </>
   );
 }
