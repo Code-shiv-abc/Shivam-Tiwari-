@@ -7,13 +7,14 @@ A zero-cost, high-performance personal profile website for Shivam Tiwari, design
 - **Framework**: Next.js 15 (App Router, React Server Components)
 - **Language**: TypeScript (Strict Mode)
 - **Styling**: Tailwind CSS + Lucide React
-- **Deployment**: Vercel (Optimized for Edge)
+- **Deployment**: Vercel (Optimized for Hobby Plan)
 - **Data**: GitHub REST API (ISR cached for 24 hours)
 
 ## Features
 
 - **GEO-Ready**: Includes `llm.txt` for AI agents.
-- **Performance**: Sub-100ms TTFB goal on Vercel Edge.
+- **Performance**: Sub-100ms TTFB via static assets (CDN).
+- **Cost-Optimized**: Designed for Vercel Hobby Plan (0 Image Optimization usage, minimal Function invocations).
 - **Resilience**: Fallback static data if API limits are hit.
 - **Zero-Maintenance**: Updates automatically via GitHub API.
 
