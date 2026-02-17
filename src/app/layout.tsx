@@ -7,12 +7,32 @@ import { SITE_CONFIG } from "@/lib/constants";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: `${SITE_CONFIG.name} - ${SITE_CONFIG.role}`,
+  title: {
+    default: `${SITE_CONFIG.name} - ${SITE_CONFIG.role}`,
+    template: `%s | ${SITE_CONFIG.name}`,
+  },
   description: SITE_CONFIG.description,
   metadataBase: new URL(SITE_CONFIG.url),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: SITE_CONFIG.url,
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+    siteName: SITE_CONFIG.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -38,8 +58,8 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased flex flex-col",
-          inter.className
+          "min-h-screen bg-[#0A0A0A] text-white font-sans antialiased flex flex-col selection:bg-blue-500/20",
+          inter.variable
         )}
       >
         <Navbar />

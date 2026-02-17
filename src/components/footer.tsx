@@ -1,45 +1,40 @@
 import { SITE_CONFIG } from "@/lib/constants";
-import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
-          </p>
-          <div className="flex items-center space-x-4">
-            <Link
-              href={SITE_CONFIG.social.github}
-              target="_blank"
-              rel="noreferrer"
-              className="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-            <Link
-              href={SITE_CONFIG.social.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="h-5 w-5" />
-            </Link>
-            <Link
-              href={`mailto:${SITE_CONFIG.social.email}`}
-              className="text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="h-5 w-5" />
-            </Link>
-          </div>
-          <div className="text-xs text-gray-400">
-            Built with Next.js & Vercel
-          </div>
+    <footer className="w-full border-t border-white/5 bg-black py-12 text-zinc-500">
+      <div className="mx-auto flex max-w-[960px] flex-col items-center justify-between gap-6 px-6 md:flex-row">
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
+        </p>
+        <div className="flex gap-6">
+          <Link
+            href={SITE_CONFIG.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors"
+          >
+            <Github className="h-5 w-5" />
+            <span className="sr-only">GitHub</span>
+          </Link>
+          <Link
+            href={SITE_CONFIG.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-white transition-colors"
+          >
+            <Linkedin className="h-5 w-5" />
+            <span className="sr-only">LinkedIn</span>
+          </Link>
+          <Link
+            href={`mailto:${SITE_CONFIG.social.email}`}
+            className="hover:text-white transition-colors"
+          >
+            <Mail className="h-5 w-5" />
+            <span className="sr-only">Email</span>
+          </Link>
         </div>
       </div>
     </footer>
