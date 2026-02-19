@@ -1,37 +1,39 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { SITE_CONFIG } from "@/lib/constants";
+import { ArrowDown } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight, Github } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-5xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-      <div className="flex flex-col items-start justify-center space-y-4">
-        <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center px-4 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-800/20 via-black to-black opacity-50" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 flex max-w-[960px] flex-col items-center text-center"
+      >
+        <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl md:text-8xl">
           {SITE_CONFIG.name}
         </h1>
-        <h2 className="text-xl text-gray-600 dark:text-gray-300 sm:text-2xl md:text-3xl">
+        <p className="mt-6 max-w-2xl text-lg text-zinc-400 sm:text-xl md:text-2xl font-light">
           {SITE_CONFIG.role}
-        </h2>
-        <p className="max-w-2xl text-lg text-gray-500 dark:text-gray-400 sm:text-xl">
-          {SITE_CONFIG.description}
         </p>
-        <div className="flex flex-col gap-4 sm:flex-row mt-6">
-            <Link
-                href="#projects"
-                className="inline-flex items-center justify-center rounded-md bg-black px-6 py-3 text-sm font-medium text-white shadow transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
-            >
-                View Projects <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-            <Link
-                href={SITE_CONFIG.social.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-black dark:text-gray-50 dark:hover:bg-zinc-900"
-            >
-                <Github className="mr-2 h-4 w-4" /> GitHub
-            </Link>
-        </div>
-      </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2"
+      >
+        <Link href="#about" aria-label="Scroll to About section">
+            <ArrowDown className="h-6 w-6 text-zinc-600 hover:text-white transition-colors animate-pulse" />
+        </Link>
+      </motion.div>
     </section>
   );
 }

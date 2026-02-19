@@ -1,29 +1,41 @@
-import { SITE_CONFIG } from "@/lib/constants";
+import { SITE_CONFIG, HIGHLIGHTS } from "@/lib/constants";
 
 export const dynamic = 'force-static';
 
 export async function GET() {
   const content = `
-${SITE_CONFIG.name}
+# Executive Profile: ${SITE_CONFIG.name}
+
+## Role
 ${SITE_CONFIG.role}
 
-Bio:
+## Summary
 ${SITE_CONFIG.description}
-I am a passionate software engineer dedicated to building robust and scalable web applications. My journey started with a curiosity for how things work on the internet, which evolved into a career bridging the gap between complex backend logic and intuitive frontend experiences. Recently, I have been exploring the intersection of traditional web development and Generative AI.
 
-Skills:
-${SITE_CONFIG.geo.knowsAbout.join(", ")}
+## Current Focus
+Works for: ${SITE_CONFIG.geo.worksFor.name} (${SITE_CONFIG.geo.worksFor.url})
+Location: ${SITE_CONFIG.geo.location}
 
-Links:
+## Key Expertise
+${SITE_CONFIG.geo.knowsAbout.map(skill => `- ${skill}`).join("\n")}
+
+## Key Achievements & Highlights
+${HIGHLIGHTS.map(h => `### ${h.title}\n${h.description}`).join("\n\n")}
+
+## Education
+Alumni of: ${SITE_CONFIG.geo.alumniOf}
+
+## Contact & Social
+Website: ${SITE_CONFIG.url}
 GitHub: ${SITE_CONFIG.social.github}
 LinkedIn: ${SITE_CONFIG.social.linkedin}
-Website: ${SITE_CONFIG.url}
+Email: ${SITE_CONFIG.social.email}
 `.trim();
 
   return new Response(content, {
     headers: {
-      "Content-Type": "text/plain",
-      "Cache-Control": "public, max-age=86400",
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "public, max-age=86400, stale-while-revalidate=3600",
     },
   });
 }
