@@ -106,6 +106,10 @@ export default function RootLayout({
       "@type": "CollegeOrUniversity",
       "name": SITE_CONFIG.geo.alumniOf
     },
+    "homeLocation": {
+      "@type": "Place",
+      "name": SITE_CONFIG.geo.location
+    },
     "knowsAbout": SITE_CONFIG.geo.knowsAbout,
     "description": SITE_CONFIG.description,
     "mainEntityOfPage": {
