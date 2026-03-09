@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   social: {
     github: "https://github.com/shivamtiwari",
     linkedin: "https://linkedin.com/in/shivamtiwari",
-    email: "contact@shivamtiwari.com",
+    email: "cvamtiwari73@gmail.com",
     twitter: "@shivamtiwari_tech", // Hypothetical handle
   },
   geo: {
