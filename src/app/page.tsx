@@ -1,23 +1,20 @@
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { Highlights } from "@/components/highlights";
-import { Activity } from "@/components/activity";
-import { Vision } from "@/components/vision";
-import { Contact } from "@/components/contact";
-import { Suspense } from "react";
+import { Stack } from "@/components/stack";
+import { Projects } from "@/components/projects";
+import { Connect } from "@/components/connect";
+import { getRepos } from "@/lib/github";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getRepos();
+
   return (
     <>
       <Hero />
       <About />
-      <Highlights />
-      {/* We use React Suspense to stream the dynamic content without blocking the main render */}
-      <Suspense fallback={null}>
-        <Activity />
-      </Suspense>
-      <Vision />
-      <Contact />
+      <Stack />
+      <Projects projects={projects} />
+      <Connect />
     </>
   );
 }
