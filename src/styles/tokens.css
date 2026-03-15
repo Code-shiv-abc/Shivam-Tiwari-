@@ -19,6 +19,12 @@
   --color-green: #106981; /* success, metrics */
   --color-red: #ef4444; /* errors, critical */
 
+  --color-brand-violet: #7c3aed;
+  --color-brand-cyan: #06b6d4;
+  --color-brand-emerald: #10b981;
+  --color-brand-amber: #f59e0b;
+  --color-brand-red: #ef4444;
+
   --color-text: #eeeef5; /* primary text */
   --color-text-2: #a6a6c5; /* secondary text */
   --color-text-3: #606080; /* muted text, labels */
