@@ -1,0 +1,36 @@
+/**
+ * Design token variables mapped to CSS custom properties.
+ * These tokens define the fundamental visual language of the application.
+ */
+
+:root {
+  /* Colors */
+  --color-bg: #0A0A0A; /* deep dark background */
+  --color-surface: #0e0e1a; /* card / section backgrounds */
+  --color-surface-2: #151525; /* nav/header, elevated surfaces */
+  --color-surface-3: #1c1c2e;
+  --color-border: #252538; /* primary borders */
+  --color-border-soft: #1e1e30; /* subtle dividers */
+
+  --color-accent: #7c3aed; /* primary violet for CTAs, highlights */
+  --color-accent-light: #a78bfa; /* lighter violet for text on dark */
+  --color-cyan: #06b6d4; /* secondary accent, technical feel */
+  --color-amber: #f59e0b; /* tertiary, warnings, callouts */
+  --color-green: #106981; /* success, metrics */
+  --color-red: #ef4444; /* errors, critical */
+
+  --color-text: #eeeef5; /* primary text */
+  --color-text-2: #a6a6c5; /* secondary text */
+  --color-text-3: #606080; /* muted text, labels */
+
+  /* Typography Scale is handled by mapping next/font variables to Tailwind in tailwind.config.ts */
+  /* --font-display: var(--font-syne) */
+  /* --font-body: var(--font-dm-sans) */
+  /* --font-mono: var(--font-dm-mono) */
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
