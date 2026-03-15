@@ -25,6 +25,13 @@ const config: Config = {
           DEFAULT: "var(--color-accent)",
           light: "var(--color-accent-light)",
         },
+        brand: {
+          violet: "var(--color-brand-violet)",
+          cyan: "var(--color-brand-cyan)",
+          emerald: "var(--color-brand-emerald)",
+          amber: "var(--color-brand-amber)",
+          red: "var(--color-brand-red)",
+        },
         cyan: "var(--color-cyan)",
         amber: "var(--color-amber)",
         green: "var(--color-green)",
