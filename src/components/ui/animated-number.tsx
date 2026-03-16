@@ -1,8 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import { useInView, useSpring, useTransform, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+const formatterCache = new Map<number, Intl.NumberFormat>();
+
+function getFormatter(decimals: number): Intl.NumberFormat {
+  if (!formatterCache.has(decimals)) {
+    formatterCache.set(
+      decimals,
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })
+    );
+  }
+  return formatterCache.get(decimals)!;
+}
 
 interface AnimatedNumberProps {
   value: number;
@@ -35,17 +50,8 @@ export function AnimatedNumber({
     }
   }, [isInView, springValue, value]);
 
-  const formatter = useMemo(
-    () =>
-      new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      }),
-    [decimals]
-  );
-
   const displayValue = useTransform(springValue, (current) => {
-    return formatter.format(current);
+    return getFormatter(decimals).format(current);
   });
 
   return (
