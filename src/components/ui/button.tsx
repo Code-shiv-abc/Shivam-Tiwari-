@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "cta";
-  rightIcon?: boolean;
+  rightIcon?: boolean | React.ReactNode;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -28,11 +28,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {children}
-        {rightIcon && (
+        {rightIcon && rightIcon === true ? (
           <ArrowRight
             className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
             aria-hidden="true"
           />
+        ) : (
+          rightIcon
         )}
       </button>
     );
