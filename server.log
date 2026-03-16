@@ -22,3 +22,4 @@
  ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
  GET /images/shivam.jpg 404 in 22ms
  ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ ✓ Compiled in 10.6s (1500 modules)
