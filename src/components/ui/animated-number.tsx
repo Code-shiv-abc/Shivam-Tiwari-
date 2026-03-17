@@ -4,6 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { useInView, useSpring, useTransform, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// Module-level cache — created once, never recreated on re-renders
+const formatterCache = new Map<string, Intl.NumberFormat>();
+
+function getFormatter(decimals: number): Intl.NumberFormat {
+  const key = `${decimals}`;
+  if (!formatterCache.has(key)) {
+    formatterCache.set(
+      key,
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })
+    );
+  }
+  return formatterCache.get(key)!;
+}
+
 interface AnimatedNumberProps {
   value: number;
   prefix?: string;
@@ -36,10 +53,7 @@ export function AnimatedNumber({
   }, [isInView, springValue, value]);
 
   const displayValue = useTransform(springValue, (current) => {
-    return new Intl.NumberFormat("en-US", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    }).format(current);
+    return getFormatter(decimals).format(current);
   });
 
   return (
