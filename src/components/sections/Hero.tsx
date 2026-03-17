@@ -27,7 +27,7 @@ export function Hero() {
         <div
           className="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(124,58,237,0.10) 0%, transparent 70%)",
+            background: "radial-gradient(circle, var(--color-brand-violet-10) 0%, transparent 70%)",
           }}
         ></div>
 
@@ -61,7 +61,7 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[60fr_40fr] gap-12 items-center max-w-[1280px] w-full mx-auto px-6 lg:px-12 py-28 lg:py-32">
-        <div className="flex flex-col">
+        <motion.div className="flex flex-col" initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
           <motion.div
             variants={fadeIn}
             initial="hidden"
@@ -171,7 +171,7 @@ export function Hero() {
               </motion.div>
             )})}
           </motion.div>
-        </div>
+        </motion.div>
 
         <div className="order-first lg:order-last flex justify-center items-center relative w-full h-full">
           <motion.div
@@ -181,7 +181,7 @@ export function Hero() {
             transition={{ delay: 0.4 }}
             className="relative aspect-square w-full max-w-[280px] lg:max-w-[420px] mx-auto rounded-[24px] border border-border bg-gradient-to-br from-surface-2 to-surface-3 z-10"
             style={{
-              boxShadow: "0 0 60px rgba(124,58,237,0.15)",
+              boxShadow: "0 0 60px var(--color-brand-violet-15)",
             }}
           >
             {!imgError ? (
