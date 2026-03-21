@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import type { UseInViewOptions } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -15,13 +15,7 @@ export const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.4 },
-  },
-};
-
-export const stagger = {
-  visible: {
-    transition: { staggerChildren: 0.08 },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
@@ -30,23 +24,28 @@ export const slideRight = {
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
 export const scaleIn = {
-  hidden: { opacity: 0, scale: 0.94 },
+  hidden: { opacity: 0, scale: 0.92 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.4 },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
-import type { UseInViewOptions } from "framer-motion";
+// NOTE: stagger has been intentionally removed.
+// It was propagating opacity:0 to all children in Hero
+// and freezing the entire left column invisible.
+// Each element now manages its own entrance animation.
 
-export function useScrollReveal(options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" }) {
-  const ref = useRef<any>(null);
+export function useScrollReveal(
+  options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" }
+) {
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, options);
   const [isVisible, setIsVisible] = useState(false);
 
