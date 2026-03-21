@@ -1,72 +1,130 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ArrowDown } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AnimatedNumber } from "@/components/ui/animated-number";
-import { fadeIn, fadeUp, stagger, scaleIn } from "@/lib/animations";
 import { SITE_CONFIG } from "@/lib/config";
+
+// ─────────────────────────────────────────────
+// ANIMATION VARIANTS
+// Defined here so they are co-located with the
+// component that owns the entrance sequence.
+// These are intentionally simple — no stagger
+// orchestration via parent variants, which was
+// causing the hidden state to propagate and
+// freeze all children.
+// ─────────────────────────────────────────────
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+function fadeIn(delay: number, reduced: boolean) {
+  if (reduced) return { initial: { opacity: 1 }, animate: { opacity: 1 } };
+  return {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.5, delay, ease: "easeOut" },
+  };
+}
+
+function fadeUp(delay: number, reduced: boolean) {
+  if (reduced) return { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 } };
+  return {
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.65, delay, ease: EASE },
+  };
+}
+
+function scaleIn(delay: number, reduced: boolean) {
+  if (reduced) return { initial: { opacity: 1, scale: 1 }, animate: { opacity: 1, scale: 1 } };
+  return {
+    initial: { opacity: 0, scale: 0.92 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.7, delay, ease: EASE },
+  };
+}
+
+function floatCard(delay: number, reduced: boolean) {
+  if (reduced) return { initial: { opacity: 1, y: 0, scale: 1 }, animate: { opacity: 1, y: 0, scale: 1 } };
+  return {
+    initial: { opacity: 0, y: 12, scale: 0.95 },
+    animate: { opacity: 1, y: 0, scale: 1 },
+    transition: { duration: 0.5, delay, ease: EASE },
+  };
+}
+
+// Metric color map — typed against config values
+const METRIC_COLORS: Record<string, string> = {
+  violet:  "text-[var(--color-brand-violet)]",
+  cyan:    "text-[var(--color-brand-cyan)]",
+  emerald: "text-[var(--color-brand-emerald)]",
+  amber:   "text-[var(--color-brand-amber)]",
+};
 
 export function Hero() {
   const [imgError, setImgError] = useState(false);
+  const reduced = useReducedMotion() ?? false;
+
+  // Ref for the metrics row — passed to AnimatedNumber
+  // so counters fire when this element enters the viewport.
+  // On hero (above the fold) this fires immediately on mount.
+  const metricsRef = useRef<HTMLDivElement>(null);
 
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-[var(--color-bg)] min-h-screen flex flex-col"
+      aria-label="Hero"
+      className="relative overflow-visible bg-[var(--color-bg)] min-h-screen flex flex-col"
     >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-      >
-        {/* Violet Radial Blob */}
-        <div
-          className="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(124,58,237,0.10) 0%, transparent 70%)",
-          }}
-        ></div>
+      {/* ── BACKGROUND LAYERS ─────────────────────── */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
 
-        {/* Concentric Pulse Rings */}
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.15, 0.05, 0.15] }}
-          transition={{ duration: 4, ease: "easeInOut", repeat: Infinity, delay: 0 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-violet/10"
-          style={{ width: 480, height: 480 }}
-        />
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.15, 0.05, 0.15] }}
-          transition={{ duration: 4, ease: "easeInOut", repeat: Infinity, delay: 1.3 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-violet/10"
-          style={{ width: 560, height: 560 }}
-        />
-        <motion.div
-          animate={{ scale: [1, 1.05, 1], opacity: [0.15, 0.05, 0.15] }}
-          transition={{ duration: 4, ease: "easeInOut", repeat: Infinity, delay: 2.6 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-violet/10"
-          style={{ width: 640, height: 640 }}
-        />
-
-        {/* Dot Grid Pattern */}
+        {/* Dot grid */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23ffffff'/%3E%3C/svg%3E\")",
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23ffffff'/%3E%3C/svg%3E\")",
           }}
-        ></div>
+        />
+
+        {/* Violet blob — top right, drifts slowly */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            top: -80,
+            right: -60,
+            width: 600,
+            height: 600,
+            background: "radial-gradient(ellipse at center, rgba(124,58,237,0.14) 0%, transparent 65%)",
+          }}
+          animate={reduced ? {} : {
+            x: [0, 20, 0],
+            y: [0, 30, 0],
+            scale: [1, 1.06, 1],
+          }}
+          transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
+        />
       </div>
 
+      {/* ── MAIN GRID ─────────────────────────────── */}
       <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[60fr_40fr] gap-12 items-center max-w-[1280px] w-full mx-auto px-6 lg:px-12 py-28 lg:py-32">
+
+        {/* ── LEFT COLUMN ───────────────────────────── */}
+        {/* NOTE: This is a plain div intentionally.
+            Each child manages its own entrance animation.
+            A motion.div parent with variants here was
+            propagating opacity:0 and blocking all children. */}
         <div className="flex flex-col">
+
+          {/* 1. Badge — 0ms */}
           <motion.div
-            variants={fadeIn}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.2 }}
+            {...fadeIn(0, reduced)}
             className="mb-5 self-start"
           >
             <Badge variant="violet" dot>
@@ -74,176 +132,261 @@ export function Hero() {
             </Badge>
           </motion.div>
 
-          <motion.h1
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
+          {/* 2. Headline — lines stagger 200 / 320 / 440ms */}
+          <h1
             className="font-display font-extrabold mt-5"
             style={{
-              fontSize: "clamp(42px, 6vw, 76px)",
+              fontSize: "clamp(42px, 5.5vw, 76px)",
               lineHeight: 1.02,
               letterSpacing: "-0.04em",
             }}
           >
-            <motion.div variants={fadeUp} transition={{ delay: 0.30 }}>
+            <motion.span
+              {...fadeUp(0.2, reduced)}
+              className="block text-[var(--color-text-1)]"
+            >
               I build engineering
-            </motion.div>
-            <motion.div variants={fadeUp} transition={{ delay: 0.38 }}>
+            </motion.span>
+            <motion.span
+              {...fadeUp(0.32, reduced)}
+              className="block text-[var(--color-text-1)]"
+            >
               organizations that
-            </motion.div>
-            <motion.div variants={fadeUp} transition={{ delay: 0.46 }}>
-              ship{" "}
-              <span className="bg-gradient-to-r from-brand-violet to-brand-cyan bg-clip-text text-transparent">
-                faster.
+            </motion.span>
+            <motion.span
+              {...fadeUp(0.44, reduced)}
+              className="block"
+            >
+              <span className="text-[var(--color-text-1)]">ship </span>
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, var(--color-accent-light), var(--color-brand-cyan))",
+                }}
+              >
+                {SITE_CONFIG.gradientWord ?? "faster."}
               </span>
-            </motion.div>
-          </motion.h1>
+            </motion.span>
+          </h1>
 
+          {/* 3. Tagline — 600ms */}
           <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-            className="font-sans text-[18px] text-text-2 max-w-[520px] leading-[1.7] mt-6"
-          >
-            {SITE_CONFIG.tagline}
-          </motion.p>
+            {...fadeUp(0.6, reduced)}
+            className="font-body text-[1.05rem] text-[var(--color-text-2)] max-w-[520px] leading-[1.75] mt-6"
+            dangerouslySetInnerHTML={{ __html: SITE_CONFIG.tagline }}
+          />
 
+          {/* 4. CTAs — 800ms */}
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.8 }}
+            {...fadeUp(0.8, reduced)}
             className="flex gap-4 mt-10 flex-wrap"
           >
             <a
               href={SITE_CONFIG.cta.calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block"
+              aria-label="Book a strategy call with Shivam Tiwari"
             >
-              <Button variant="cta" rightIcon={<Calendar size={16} />}>
+              <Button variant="cta" rightIcon={<Calendar size={16} aria-hidden="true" />}>
                 {SITE_CONFIG.cta.primary}
               </Button>
             </a>
-            <a href="#work" className="inline-block">
-              <Button variant="secondary" rightIcon={<ArrowRight size={16} />}>
+            <a href="#work" aria-label="View Shivam's work">
+              <Button variant="secondary" rightIcon={<ArrowDown size={16} aria-hidden="true" />}>
                 {SITE_CONFIG.cta.secondary}
               </Button>
             </a>
           </motion.div>
 
+          {/* 5. Metrics — 1000ms, counters fire on mount */}
           <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-14"
+            {...fadeUp(1.0, reduced)}
+            ref={metricsRef}
+            className="grid grid-cols-2 lg:grid-cols-4 mt-14"
           >
-            {SITE_CONFIG.metrics.map((metric, index) => {
-              // mapping colors based on the text color tokens to ensure it matches precisely
-              const textColors: Record<string, string> = {
-                violet: "text-brand-violet",
-                emerald: "text-brand-emerald",
-                cyan: "text-brand-cyan",
-                amber: "text-brand-amber",
-              };
-
-              return (
-              <motion.div
+            {SITE_CONFIG.metrics.map((metric, index) => (
+              <div
                 key={metric.label}
-                variants={fadeUp}
-                transition={{ delay: 1.0 + index * 0.12 }}
-                className="relative flex flex-col after:absolute after:right-0 after:top-[10%] after:h-[80%] after:w-px after:bg-gradient-to-b after:from-transparent after:via-border after:to-transparent lg:last:after:hidden even:after:hidden lg:even:after:block pr-4"
+                className="relative flex flex-col pr-4 lg:pr-6"
+                style={{
+                  borderLeft: index > 0 ? "1px solid var(--color-border)" : undefined,
+                  paddingLeft: index > 0 ? "1rem" : undefined,
+                }}
               >
+                {/* Metric number */}
                 <div
-                  className={`font-display font-extrabold text-5xl ${textColors[metric.color] || "text-brand-violet"}`}
+                  className={`font-display font-extrabold leading-none ${METRIC_COLORS[metric.color] ?? "text-[var(--color-brand-violet)]"}`}
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+                  aria-live="polite"
                 >
                   <AnimatedNumber
                     value={metric.value}
                     prefix={metric.prefix}
                     suffix={metric.suffix}
-                    decimals={metric.label === "System Uptime" ? 2 : 0}
+                    decimals={metric.decimals ?? 0}
+                    duration={1800}
+                    startOnMount
+                    delay={1000 + index * 120}
+                    reduceMotion={reduced}
                   />
                 </div>
-                <div className="font-mono text-[11px] uppercase tracking-widest text-text-2 mt-1.5">
+                {/* Metric label */}
+                <div className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-[var(--color-text-3)] mt-2 leading-tight">
                   {metric.label}
                 </div>
-              </motion.div>
-            )})}
+              </div>
+            ))}
           </motion.div>
         </div>
 
-        <div className="order-first lg:order-last flex justify-center items-center relative w-full h-full">
+        {/* ── RIGHT COLUMN ──────────────────────────── */}
+        <div className="order-first lg:order-last flex justify-center items-center relative">
+
+          {/* Pulsing rings — anchored to right column, behind photo */}
+          {!reduced && (
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              {[
+                { size: 460, delay: 0,   color: "rgba(124,58,237,0.10)" },
+                { size: 540, delay: 1.3, color: "rgba(6,182,212,0.06)"  },
+                { size: 620, delay: 2.6, color: "rgba(124,58,237,0.05)" },
+              ].map((ring, i) => (
+                <motion.div
+                  key={i}
+                  aria-hidden="true"
+                  className="absolute rounded-full"
+                  style={{
+                    width:  ring.size,
+                    height: ring.size,
+                    border: `1px solid ${ring.color}`,
+                  }}
+                  animate={{ scale: [1, 1.06, 1], opacity: [0.6, 1, 0.6] }}
+                  transition={{
+                    duration: 4,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    delay: ring.delay,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Photo frame */}
           <motion.div
-            variants={scaleIn}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.4 }}
-            className="relative aspect-square w-full max-w-[280px] lg:max-w-[420px] mx-auto rounded-[24px] border border-border bg-gradient-to-br from-surface-2 to-surface-3 z-10"
+            {...scaleIn(0.4, reduced)}
+            className="relative aspect-square w-full max-w-[280px] lg:max-w-[420px] mx-auto rounded-[24px] border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-surface-2)] to-[var(--color-surface-3)] z-10"
             style={{
-              boxShadow: "0 0 60px rgba(124,58,237,0.15)",
+              boxShadow: "0 0 0 1px rgba(124,58,237,0.08), 0 0 60px rgba(124,58,237,0.15), 0 24px 80px rgba(0,0,0,0.5)",
             }}
           >
             {!imgError ? (
               <Image
                 src="/images/shivam.jpg"
-                alt="Shivam Tiwari"
+                alt="Shivam Tiwari — Engineering Leader"
                 fill
-                className="object-cover rounded-[24px]"
+                sizes="(max-width: 1024px) 280px, 420px"
+                className="object-cover object-top rounded-[24px]"
+                priority
                 onError={() => setImgError(true)}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center rounded-[24px] bg-gradient-to-br from-surface-2 to-surface-3">
-                <span className="font-display font-extrabold text-6xl text-brand-violet select-none tracking-tight">
+              <div className="w-full h-full flex items-center justify-center rounded-[24px]">
+                <span
+                  className="font-display font-extrabold text-6xl select-none tracking-tight bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: "linear-gradient(135deg, var(--color-accent-light), var(--color-brand-cyan))",
+                  }}
+                >
                   ST
                 </span>
               </div>
             )}
-          </motion.div>
 
-          {/* Floating Accent Cards */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.7 }}
-            className="absolute px-3 py-2 rounded-xl border border-border bg-surface-1/80 backdrop-blur-md shadow-lg flex items-center gap-2 whitespace-nowrap z-20 text-xs font-medium top-4 -right-6 lg:right-0"
-          >
-            <span>⭐</span>
-            <span className="text-text-1">Trusted by engineering leaders</span>
-          </motion.div>
+            {/* ── FLOATING CARDS ── */}
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.82 }}
-            className="absolute px-3 py-2 rounded-xl border border-border bg-surface-1/80 backdrop-blur-md shadow-lg flex items-center gap-2 whitespace-nowrap z-20 text-xs font-medium -bottom-4 -left-6 lg:left-0"
-          >
-            <span>🚀</span>
-            <span className="text-brand-emerald">40% faster release cycles</span>
-          </motion.div>
+            {/* Card 1 — Engineering Advisor (top right) */}
+            <motion.div
+              {...floatCard(0.7, reduced)}
+              aria-hidden="true"
+              className="absolute -top-4 -right-4 lg:-right-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              animate={reduced ? {} : { y: [0, -8, 0] }}
+              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity, delay: 1.2 }}
+            >
+              <div className="text-[0.6rem] font-mono uppercase tracking-[0.1em] text-[var(--color-text-3)] mb-1">
+                Engineering Advisor
+              </div>
+              <div className="text-[0.82rem] font-medium text-[var(--color-text-1)]">
+                50+ Companies Guided
+              </div>
+            </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.94 }}
-            className="absolute px-3 py-2 rounded-xl border border-border bg-surface-1/80 backdrop-blur-md shadow-lg flex items-center gap-2 whitespace-nowrap z-20 text-xs font-medium top-1/2 -right-10 lg:-right-4"
-          >
-            <span>⚡</span>
-            <span className="text-brand-cyan">99.99% uptime delivered</span>
+            {/* Card 2 — Open to roles (bottom left) */}
+            <motion.div
+              {...floatCard(0.85, reduced)}
+              aria-hidden="true"
+              className="absolute -bottom-4 -left-4 lg:-left-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              animate={reduced ? {} : { y: [0, 6, 0] }}
+              transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 1.35 }}
+            >
+              <div className="text-[0.6rem] font-mono uppercase tracking-[0.1em] text-[var(--color-text-3)] mb-1">
+                Status
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{
+                    background: "var(--color-brand-emerald)",
+                    boxShadow: "0 0 6px var(--color-brand-emerald)",
+                    animation: reduced ? "none" : "pulse 2s ease infinite",
+                  }}
+                />
+                <span className="text-[0.82rem] font-medium text-[var(--color-text-1)]">
+                  Open to Advisory Roles
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Card 3 — Social proof (bottom right) */}
+            <motion.div
+              {...floatCard(1.0, reduced)}
+              aria-hidden="true"
+              className="absolute -bottom-2 -right-4 lg:-right-6 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              animate={reduced ? {} : { y: [0, -5, 0] }}
+              transition={{ duration: 5.5, ease: "easeInOut", repeat: Infinity, delay: 1.5 }}
+            >
+              <div className="text-[0.75rem] text-[var(--color-brand-amber)]">★★★★★</div>
+              <div className="text-[0.68rem] text-[var(--color-text-2)] mt-0.5">
+                Trusted by engineering leaders
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
 
+      {/* ── BOTTOM GRADIENT DIVIDER ───────────────── */}
       <div
         aria-hidden="true"
-        className="h-px w-full opacity-30"
+        className="h-px w-full"
         style={{
-          background: "linear-gradient(90deg, transparent, var(--color-accent) 30%, var(--color-cyan) 70%, transparent)",
+          background:
+            "linear-gradient(90deg, transparent 0%, var(--color-accent) 30%, var(--color-brand-cyan) 70%, transparent 100%)",
+          opacity: 0.3,
         }}
-      ></div>
+      />
+
+      {/* Pulse keyframe for status dot */}
+      <style jsx>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.5; transform: scale(0.8); }
+        }
+      `}</style>
     </section>
   );
 }
