@@ -37,13 +37,13 @@ export const scaleIn = {
   },
 };
 
-// NOTE: stagger has been intentionally removed.
+// NOTE: orchestrations has been intentionally removed.
 // It was propagating opacity:0 to all children in Hero
 // and freezing the entire left column invisible.
 // Each element now manages its own entrance animation.
 
 export function useScrollReveal(
-  options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" }
+  options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" },
 ) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, options);

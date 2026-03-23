@@ -14,8 +14,8 @@ import { SITE_CONFIG } from "@/lib/config";
 // ANIMATION VARIANTS
 // Defined here so they are co-located with the
 // component that owns the entrance sequence.
-// These are intentionally simple — no stagger
-// orchestration via parent variants, which was
+// These are intentionally simple — no orchestration
+// via parent variants, which was
 // causing the hidden state to propagate and
 // freeze all children.
 // ─────────────────────────────────────────────
@@ -27,12 +27,13 @@ function fadeIn(delay: number, reduced: boolean) {
   return {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    transition: { duration: 0.5, delay, ease: "easeOut" },
+    transition: { duration: 0.5, delay, ease: "easeOut" as const },
   };
 }
 
 function fadeUp(delay: number, reduced: boolean) {
-  if (reduced) return { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 } };
+  if (reduced)
+    return { initial: { opacity: 1, y: 0 }, animate: { opacity: 1, y: 0 } };
   return {
     initial: { opacity: 0, y: 24 },
     animate: { opacity: 1, y: 0 },
@@ -41,16 +42,24 @@ function fadeUp(delay: number, reduced: boolean) {
 }
 
 function scaleIn(delay: number, reduced: boolean) {
-  if (reduced) return { initial: { opacity: 1, scale: 1 }, animate: { opacity: 1, scale: 1 } };
+  if (reduced)
+    return {
+      initial: { opacity: 1, scale: 1 },
+      animate: { opacity: 1, scale: 1 },
+    };
   return {
-    initial: { opacity: 0, scale: 0.92 },
+    initial: { opacity: 1, scale: 1 },
     animate: { opacity: 1, scale: 1 },
-    transition: { duration: 0.7, delay, ease: EASE },
+    transition: { duration: 0, delay: 0 },
   };
 }
 
 function floatCard(delay: number, reduced: boolean) {
-  if (reduced) return { initial: { opacity: 1, y: 0, scale: 1 }, animate: { opacity: 1, y: 0, scale: 1 } };
+  if (reduced)
+    return {
+      initial: { opacity: 1, y: 0, scale: 1 },
+      animate: { opacity: 1, y: 0, scale: 1 },
+    };
   return {
     initial: { opacity: 0, y: 12, scale: 0.95 },
     animate: { opacity: 1, y: 0, scale: 1 },
@@ -60,10 +69,10 @@ function floatCard(delay: number, reduced: boolean) {
 
 // Metric color map — typed against config values
 const METRIC_COLORS: Record<string, string> = {
-  violet:  "text-[var(--color-brand-violet)]",
-  cyan:    "text-[var(--color-brand-cyan)]",
+  violet: "text-[var(--color-brand-violet)]",
+  cyan: "text-[var(--color-brand-cyan)]",
   emerald: "text-[var(--color-brand-emerald)]",
-  amber:   "text-[var(--color-brand-amber)]",
+  amber: "text-[var(--color-brand-amber)]",
 };
 
 export function Hero() {
@@ -82,8 +91,10 @@ export function Hero() {
       className="relative overflow-visible bg-[var(--color-bg)] min-h-screen flex flex-col"
     >
       {/* ── BACKGROUND LAYERS ─────────────────────── */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+      >
         {/* Dot grid */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -101,38 +112,38 @@ export function Hero() {
             right: -60,
             width: 600,
             height: 600,
-            background: "radial-gradient(ellipse at center, rgba(124,58,237,0.14) 0%, transparent 65%)",
+            background:
+              "radial-gradient(ellipse at center, var(--color-brand-violet-glow-14) 0%, transparent 65%)",
           }}
-          animate={reduced ? {} : {
-            x: [0, 20, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.06, 1],
-          }}
+          animate={
+            reduced
+              ? {}
+              : {
+                  x: [0, 20, 0],
+                  y: [0, 30, 0],
+                  scale: [1, 1.06, 1],
+                }
+          }
           transition={{ duration: 8, ease: "easeInOut", repeat: Infinity }}
         />
       </div>
 
       {/* ── MAIN GRID ─────────────────────────────── */}
       <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-[60fr_40fr] gap-12 items-center max-w-[1280px] w-full mx-auto px-6 lg:px-12 py-28 lg:py-32">
-
         {/* ── LEFT COLUMN ───────────────────────────── */}
         {/* NOTE: This is a plain div intentionally.
             Each child manages its own entrance animation.
             A motion.div parent with variants here was
             propagating opacity:0 and blocking all children. */}
         <div className="flex flex-col">
-
           {/* 1. Badge — 0ms */}
-          <motion.div
-            {...fadeIn(0, reduced)}
-            className="mb-5 self-start"
-          >
+          <motion.div {...fadeIn(0, reduced)} className="mb-5 self-start">
             <Badge variant="violet" dot>
               {SITE_CONFIG.badge}
             </Badge>
           </motion.div>
 
-          {/* 2. Headline — lines stagger 200 / 320 / 440ms */}
+          {/* 2. Headline — lines flow 200 / 320 / 440ms */}
           <h1
             className="font-display font-extrabold mt-5"
             style={{
@@ -153,15 +164,13 @@ export function Hero() {
             >
               organizations that
             </motion.span>
-            <motion.span
-              {...fadeUp(0.44, reduced)}
-              className="block"
-            >
+            <motion.span {...fadeUp(0.44, reduced)} className="block">
               <span className="text-[var(--color-text-1)]">ship </span>
               <span
                 className="bg-clip-text text-transparent"
                 style={{
-                  backgroundImage: "linear-gradient(90deg, var(--color-accent-light), var(--color-brand-cyan))",
+                  backgroundImage:
+                    "linear-gradient(90deg, var(--color-accent-light), var(--color-brand-cyan))",
                 }}
               >
                 {SITE_CONFIG.gradientWord ?? "faster."}
@@ -185,14 +194,21 @@ export function Hero() {
               href={SITE_CONFIG.cta.calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Book a strategy call with Shivam Tiwari"
+              aria-label="Book a Strategy Call"
+              className="inline-block"
             >
-              <Button variant="cta" rightIcon={<Calendar size={16} aria-hidden="true" />}>
+              <Button
+                variant="cta"
+                rightIcon={<Calendar size={16} aria-hidden="true" />}
+              >
                 {SITE_CONFIG.cta.primary}
               </Button>
             </a>
-            <a href="#work" aria-label="View Shivam's work">
-              <Button variant="secondary" rightIcon={<ArrowDown size={16} aria-hidden="true" />}>
+            <a href="#work" aria-label="View My Work" className="inline-block">
+              <Button
+                variant="secondary"
+                rightIcon={<ArrowDown size={16} aria-hidden="true" />}
+              >
                 {SITE_CONFIG.cta.secondary}
               </Button>
             </a>
@@ -209,14 +225,15 @@ export function Hero() {
                 key={metric.label}
                 className="relative flex flex-col pr-4 lg:pr-6"
                 style={{
-                  borderLeft: index > 0 ? "1px solid var(--color-border)" : undefined,
+                  borderLeft:
+                    index > 0 ? "1px solid var(--color-border)" : undefined,
                   paddingLeft: index > 0 ? "1rem" : undefined,
                 }}
               >
                 {/* Metric number */}
                 <div
                   className={`font-display font-extrabold leading-none ${METRIC_COLORS[metric.color] ?? "text-[var(--color-brand-violet)]"}`}
-                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
+                  style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", minHeight: "1.2em" }}
                   aria-live="polite"
                 >
                   <AnimatedNumber
@@ -241,7 +258,6 @@ export function Hero() {
 
         {/* ── RIGHT COLUMN ──────────────────────────── */}
         <div className="order-first lg:order-last flex justify-center items-center relative">
-
           {/* Pulsing rings — anchored to right column, behind photo */}
           {!reduced && (
             <div
@@ -249,16 +265,28 @@ export function Hero() {
               className="absolute inset-0 flex items-center justify-center pointer-events-none"
             >
               {[
-                { size: 460, delay: 0,   color: "rgba(124,58,237,0.10)" },
-                { size: 540, delay: 1.3, color: "rgba(6,182,212,0.06)"  },
-                { size: 620, delay: 2.6, color: "rgba(124,58,237,0.05)" },
+                {
+                  size: 460,
+                  delay: 0,
+                  color: "var(--color-brand-violet-glow-10)",
+                },
+                {
+                  size: 540,
+                  delay: 1.3,
+                  color: "var(--color-brand-cyan-glow-06)",
+                },
+                {
+                  size: 620,
+                  delay: 2.6,
+                  color: "var(--color-brand-violet-glow-05)",
+                },
               ].map((ring, i) => (
                 <motion.div
                   key={i}
                   aria-hidden="true"
                   className="absolute rounded-full"
                   style={{
-                    width:  ring.size,
+                    width: ring.size,
                     height: ring.size,
                     border: `1px solid ${ring.color}`,
                   }}
@@ -276,10 +304,11 @@ export function Hero() {
 
           {/* Photo frame */}
           <motion.div
-            {...scaleIn(0.4, reduced)}
+            {...scaleIn(0, reduced)}
             className="relative aspect-square w-full max-w-[280px] lg:max-w-[420px] mx-auto rounded-[24px] border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-surface-2)] to-[var(--color-surface-3)] z-10"
             style={{
-              boxShadow: "0 0 0 1px rgba(124,58,237,0.08), 0 0 60px rgba(124,58,237,0.15), 0 24px 80px rgba(0,0,0,0.5)",
+              boxShadow:
+                "0 0 0 1px var(--color-brand-violet-glow-08), 0 0 60px var(--color-brand-violet-glow-15), 0 24px 80px var(--color-shadow-strong)",
             }}
           >
             {!imgError ? (
@@ -289,7 +318,9 @@ export function Hero() {
                 fill
                 sizes="(max-width: 1024px) 280px, 420px"
                 className="object-cover object-top rounded-[24px]"
-                priority
+                priority={true}
+                fetchPriority="high"
+                loading="eager"
                 onError={() => setImgError(true)}
               />
             ) : (
@@ -297,7 +328,8 @@ export function Hero() {
                 <span
                   className="font-display font-extrabold text-6xl select-none tracking-tight bg-clip-text text-transparent"
                   style={{
-                    backgroundImage: "linear-gradient(135deg, var(--color-accent-light), var(--color-brand-cyan))",
+                    backgroundImage:
+                      "linear-gradient(135deg, var(--color-accent-light), var(--color-brand-cyan))",
                   }}
                 >
                   ST
@@ -311,10 +343,15 @@ export function Hero() {
             <motion.div
               {...floatCard(0.7, reduced)}
               aria-hidden="true"
-              className="absolute -top-4 -right-4 lg:-right-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              className="absolute -top-4 -right-4 lg:-right-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border)] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg)" }}
               animate={reduced ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity, delay: 1.2 }}
+              transition={{
+                duration: 6,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 1.2,
+              }}
             >
               <div className="text-[0.6rem] font-mono uppercase tracking-[0.1em] text-[var(--color-text-3)] mb-1">
                 Engineering Advisor
@@ -328,10 +365,15 @@ export function Hero() {
             <motion.div
               {...floatCard(0.85, reduced)}
               aria-hidden="true"
-              className="absolute -bottom-4 -left-4 lg:-left-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              className="absolute -bottom-4 -left-4 lg:-left-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border)] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg)" }}
               animate={reduced ? {} : { y: [0, 6, 0] }}
-              transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 1.35 }}
+              transition={{
+                duration: 7,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 1.35,
+              }}
             >
               <div className="text-[0.6rem] font-mono uppercase tracking-[0.1em] text-[var(--color-text-3)] mb-1">
                 Status
@@ -355,12 +397,19 @@ export function Hero() {
             <motion.div
               {...floatCard(1.0, reduced)}
               aria-hidden="true"
-              className="absolute -bottom-2 -right-4 lg:-right-6 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              className="absolute -bottom-2 -right-4 lg:-right-6 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border)] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
+              style={{ background: "var(--color-glass-bg)" }}
               animate={reduced ? {} : { y: [0, -5, 0] }}
-              transition={{ duration: 5.5, ease: "easeInOut", repeat: Infinity, delay: 1.5 }}
+              transition={{
+                duration: 5.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 1.5,
+              }}
             >
-              <div className="text-[0.75rem] text-[var(--color-brand-amber)]">★★★★★</div>
+              <div className="text-[0.75rem] text-[var(--color-brand-amber)]">
+                ★★★★★
+              </div>
               <div className="text-[0.68rem] text-[var(--color-text-2)] mt-0.5">
                 Trusted by engineering leaders
               </div>
@@ -383,8 +432,15 @@ export function Hero() {
       {/* Pulse keyframe for status dot */}
       <style jsx>{`
         @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.5; transform: scale(0.8); }
+          0%,
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(0.8);
+          }
         }
       `}</style>
     </section>
