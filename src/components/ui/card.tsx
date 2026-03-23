@@ -38,18 +38,21 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "relative bg-surface border border-border rounded-[14px] overflow-hidden",
+          "relative bg-surface border border-border rounded-[14px] overflow-hidden group",
           hoverable &&
-            "transition-all duration-300 ease-out hover:-translate-y-[3px] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]",
+            "transition-all duration-300 ease-out hover:-translate-y-[4px] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]",
           paddings[padding],
           className
         )}
         {...props}
       >
+        {hoverable && (
+          <div className="absolute inset-0 bg-white/[0.02] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 pointer-events-none" />
+        )}
         {accentColor !== "none" && (
           <div
             className={cn(
-              "absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r opacity-80",
+              "absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r opacity-60 transition-opacity duration-300 ease-out group-hover:opacity-100",
               accentGradients[accentColor]
             )}
           />
