@@ -16,7 +16,7 @@ function getFormatter(decimals: number): Intl.NumberFormat {
       new Intl.NumberFormat("en-US", {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
-      })
+      }),
     );
   }
   return formatterCache.get(decimals)!;
@@ -60,7 +60,7 @@ export function AnimatedNumber({
 
   // Render final value immediately for reduced motion or SSR
   const [display, setDisplay] = useState(
-    prefix + formatter.format(value) + suffix
+    prefix + formatter.format(value) + suffix,
   );
 
   const rafRef = useRef<number | null>(null);

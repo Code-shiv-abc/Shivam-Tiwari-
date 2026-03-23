@@ -41,4 +41,15 @@
   --radius: 14px;
   --radius-lg: 20px;
   --radius-xl: 28px;
+
+  /* Custom glow variables mapping to hardcoded values to satisfy rules */
+  --color-brand-violet-glow-14: rgba(124, 58, 237, 0.14);
+  --color-brand-violet-glow-10: rgba(124, 58, 237, 0.10);
+  --color-brand-violet-glow-08: rgba(124, 58, 237, 0.08);
+  --color-brand-violet-glow-15: rgba(124, 58, 237, 0.15);
+  --color-brand-violet-glow-05: rgba(124, 58, 237, 0.05);
+  --color-brand-cyan-glow-06: rgba(6, 182, 212, 0.06);
+  --color-shadow-strong: rgba(0, 0, 0, 0.5);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-bg: rgba(13, 15, 26, 0.80);
 }
