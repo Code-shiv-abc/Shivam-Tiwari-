@@ -1,24 +1,12 @@
 
-> shivam-portfolio@1.0.0 dev
-> next dev
+> shivam-portfolio@1.0.0 start
+> next start
 
    ▲ Next.js 15.1.11
    - Local:        http://localhost:3000
    - Network:      http://192.168.0.2:3000
 
  ✓ Starting...
- ✓ Ready in 3.1s
- ○ Compiling / ...
- ✓ Compiled / in 11.7s (1540 modules)
- GET / 200 in 12881ms
- ✓ Compiled in 365ms (742 modules)
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 2.2s (1490 modules)
- GET /images/shivam.jpg 404 in 2502ms
+ ✓ Ready in 725ms
  ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
- ✓ Compiled in 718ms (1504 modules)
- GET / 200 in 178ms
- GET /images/shivam.jpg 404 in 34ms
- ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
- GET /images/shivam.jpg 404 in 22ms
  ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
