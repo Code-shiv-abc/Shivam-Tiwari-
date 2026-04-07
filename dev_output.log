@@ -1,0 +1,32 @@
+
+> shivam-portfolio@1.0.0 dev
+> next dev
+
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Ready in 1853ms
+ ○ Compiling / ...
+ ✓ Compiled / in 12.3s (1563 modules)
+ GET / 200 in 14942ms
+ ✓ Compiled in 2.6s (753 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 4.3s (1513 modules)
+ GET /images/shivam.jpg 404 in 4610ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 4602ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET / 200 in 103ms
+ GET /images/shivam.jpg 404 in 57ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 59ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 22ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8

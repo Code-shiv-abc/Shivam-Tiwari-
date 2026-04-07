@@ -72,17 +72,12 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
           <span className={`font-mono text-[10px] uppercase tracking-[0.1em] block mb-2 ${ACCENT_COLORS[study.accentColor]}`}>
             THE APPROACH →
           </span>
-          <p className="font-body text-[14px] text-text-2 leading-[1.8] max-w-xl">{study.approach}</p>
+          <p className="font-body text-[14px] text-text-2 max-w-xl">{study.approach}</p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-auto">
-          {study.tags.map((tag) => (
-            <Badge key={tag} variant="ghost" size="sm">{tag}</Badge>
-          ))}
-        </div>
       </div>
 
-      <div className={`mt-8 pt-8 border-t border-border flex ${isHero ? "lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:pl-10 lg:w-[40%] lg:flex-col lg:justify-center lg:gap-8" : "flex-row flex-wrap gap-y-6"} gap-x-8`}>
+      <div className={`mt-8 pt-8 border-t border-border flex ${isHero ? "lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-border-soft lg:pl-10 lg:w-[40%] lg:flex-col lg:justify-center lg:gap-8" : "flex-row flex-wrap gap-y-6"} gap-x-8`}>
         {study.metrics.map((metric, i) => (
           <div key={metric.label} className={isHero ? "" : "flex-1 min-w-[30%]"}>
             <div className={`font-display font-extrabold text-[32px] leading-none mb-2 ${ACCENT_COLORS[study.accentColor]}`}>
@@ -101,6 +96,12 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
               {metric.label}
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className={`flex flex-wrap gap-2 ${isHero ? "lg:absolute lg:bottom-10 lg:left-10" : "mt-8"}`}>
+        {study.tags.map((tag) => (
+          <Badge key={tag} variant="ghost" size="sm">{tag}</Badge>
         ))}
       </div>
     </Card>
