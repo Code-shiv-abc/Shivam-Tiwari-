@@ -42,10 +42,10 @@ export const scaleIn = {
 // and freezing the entire left column invisible.
 // Each element now manages its own entrance animation.
 
-export function useScrollReveal(
+export function useScrollReveal<T extends HTMLElement>(
   options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" }
 ) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
   const isInView = useInView(ref, options);
   const [isVisible, setIsVisible] = useState(false);
 

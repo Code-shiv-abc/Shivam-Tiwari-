@@ -1,0 +1,23 @@
+
+> shivam-portfolio@1.0.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+ ⚠ Port 3002 is in use, trying 3003 instead.
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:3003
+   - Network:      http://192.168.0.2:3003
+
+ ✓ Starting...
+ ✓ Ready in 1996ms
+ ○ Compiling / ...
+ ✓ Compiled / in 4s (1544 modules)
+ GET / 200 in 4928ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.9s (1534 modules)
+ GET /images/shivam.jpg 404 in 3159ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 3157ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET / 200 in 321ms
