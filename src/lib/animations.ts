@@ -43,7 +43,7 @@ export const scaleIn = {
 // Each element now manages its own entrance animation.
 
 export function useScrollReveal(
-  options: UseInViewOptions = { once: true, margin: "-100px 0px 0px 0px" }
+  options: UseInViewOptions = { once: true, amount: 0.2, margin: "0px 0px -50px 0px" }
 ) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, options);

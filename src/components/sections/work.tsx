@@ -43,17 +43,75 @@ const CONTAINER_BG = {
 
 function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: boolean }) {
   const [ref, isVisible] = useScrollReveal();
+  const cardRef = useRef<HTMLDivElement>(null);
   const Icon = ICONS[study.iconName];
+
+  const [tiltStyle, setTiltStyle] = React.useState({ transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)" });
+  const [glareStyle, setGlareStyle] = React.useState({ opacity: 0, background: "" });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+
+    // Check if user prefers reduced motion, skip tilt if so
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left; // x position within the element
+    const y = e.clientY - rect.top; // y position within the element
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Max rotation is 6 degrees
+    const rotateX = -((y - centerY) / centerY) * 6;
+    const rotateY = ((x - centerX) / centerX) * 6;
+
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+    });
+
+    // Glare effect follows mouse
+    setGlareStyle({
+      opacity: 1,
+      background: `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTiltStyle({ transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)" });
+    setGlareStyle({ opacity: 0, background: "" });
+  };
+
+  // Merge the refs
+  const setRefs = React.useCallback(
+    (node: HTMLDivElement) => {
+      cardRef.current = node;
+      if (typeof ref === "function") {
+        ref(node);
+      } else if (ref) {
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      }
+    },
+    [ref]
+  );
 
   return (
     <Card
-      ref={ref as any}
+      ref={setRefs as any}
       hoverable
       padding="lg"
       accentColor={study.accentColor}
-      className={`flex flex-col h-full ${isHero ? "lg:col-span-2 lg:flex-row lg:items-stretch lg:gap-10" : "lg:col-span-1"}`}
+      className={`flex flex-col h-full transition-transform duration-400 ease-out will-change-transform ${isHero ? "lg:col-span-2 lg:flex-row lg:items-stretch lg:gap-10" : "lg:col-span-1"}`}
+      style={{ ...tiltStyle, transformStyle: "preserve-3d" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className={`flex flex-col flex-1 ${isHero ? "lg:w-[60%]" : ""}`}>
+      <div
+        className="pointer-events-none absolute inset-0 z-50 transition-opacity duration-400 ease-out"
+        style={glareStyle}
+      />
+      <div className={`flex flex-col flex-1 z-10 relative ${isHero ? "lg:w-[60%]" : ""}`} style={{ transform: "translateZ(20px)" }}>
         <div className="flex items-center gap-4 mb-6">
           <Badge variant={study.accentColor}>{study.category}</Badge>
           <span className="font-mono text-[10px] uppercase text-text-3 tracking-[0.1em]">{study.eyebrow}</span>
@@ -77,7 +135,7 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
 
       </div>
 
-      <div className={`mt-8 pt-8 border-t border-border flex ${isHero ? "lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-border-soft lg:pl-10 lg:w-[40%] lg:flex-col lg:justify-center lg:gap-8" : "flex-row flex-wrap gap-y-6"} gap-x-8`}>
+      <div className={`mt-8 pt-8 border-t border-border flex relative z-10 ${isHero ? "lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-border-soft lg:pl-10 lg:w-[40%] lg:flex-col lg:justify-center lg:gap-8" : "flex-row flex-wrap gap-y-6"} gap-x-8`} style={{ transform: "translateZ(30px)" }}>
         {study.metrics.map((metric, i) => (
           <div key={metric.label} className={isHero ? "" : "flex-1 min-w-[30%]"}>
             <div className={`font-display font-extrabold text-[32px] leading-none mb-2 ${ACCENT_COLORS[study.accentColor]}`}>
@@ -99,7 +157,7 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
         ))}
       </div>
 
-      <div className={`flex flex-wrap gap-2 ${isHero ? "lg:absolute lg:bottom-10 lg:left-10" : "mt-8"}`}>
+      <div className={`flex flex-wrap gap-2 relative z-10 ${isHero ? "lg:absolute lg:bottom-10 lg:left-10" : "mt-8"}`} style={{ transform: "translateZ(20px)" }}>
         {study.tags.map((tag) => (
           <Badge key={tag} variant="ghost" size="sm">{tag}</Badge>
         ))}

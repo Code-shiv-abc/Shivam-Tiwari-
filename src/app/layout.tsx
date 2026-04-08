@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { SITE_CONFIG } from "@/lib/constants";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
@@ -79,6 +81,8 @@ export default function RootLayout({
           "min-h-screen font-body antialiased flex flex-col selection:bg-accent/30"
         )}
       >
+        <CustomCursor />
+        <ScrollProgressBar />
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

@@ -7,6 +7,7 @@ import { Calendar, ArrowDown } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { SITE_CONFIG } from "@/lib/config";
 
@@ -181,21 +182,26 @@ export function Hero() {
             {...fadeUp(0.8, reduced)}
             className="flex gap-4 mt-10 flex-wrap"
           >
-            <a
-              href={SITE_CONFIG.cta.calendlyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Book a strategy call with Shivam Tiwari"
-            >
-              <Button variant="cta" rightIcon={<Calendar size={16} aria-hidden="true" />}>
-                {SITE_CONFIG.cta.primary}
-              </Button>
-            </a>
-            <a href="#work" aria-label="View Shivam's work">
-              <Button variant="secondary" rightIcon={<ArrowDown size={16} aria-hidden="true" />}>
-                {SITE_CONFIG.cta.secondary}
-              </Button>
-            </a>
+            <MagneticWrapper>
+              <a
+                href={SITE_CONFIG.cta.calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Book a strategy call with Shivam Tiwari"
+                className="inline-block"
+              >
+                <Button variant="cta" rightIcon={<Calendar size={16} aria-hidden="true" />}>
+                  {SITE_CONFIG.cta.primary}
+                </Button>
+              </a>
+            </MagneticWrapper>
+            <MagneticWrapper>
+              <a href="#work" aria-label="View Shivam's work" className="inline-block">
+                <Button variant="secondary" rightIcon={<ArrowDown size={16} aria-hidden="true" />}>
+                  {SITE_CONFIG.cta.secondary}
+                </Button>
+              </a>
+            </MagneticWrapper>
           </motion.div>
 
           {/* 5. Metrics — 1000ms, counters fire on mount */}
