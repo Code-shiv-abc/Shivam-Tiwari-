@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +78,7 @@ export function Navbar() {
                     key={item.label}
                     href={item.href}
                     className={cn(
-                      "relative text-sm font-medium transition-colors duration-200",
+                      "relative text-sm font-medium transition-colors duration-200 animated-underline",
                       isActive
                         ? "text-brand-violet"
                         : "text-text-2 hover:text-brand-violet"
@@ -97,9 +98,13 @@ export function Navbar() {
 
           {/* Right: CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Button className="hidden md:inline-flex" variant="primary">
-              Book a Call
-            </Button>
+            <div className="hidden md:block">
+              <MagneticWrapper>
+                <Button variant="primary">
+                  Book a Call
+                </Button>
+              </MagneticWrapper>
+            </div>
             <button
               className="md:hidden p-2 -mr-2 text-text-2 hover:text-text transition-colors"
               onClick={() => setIsMobileMenuOpen(true)}

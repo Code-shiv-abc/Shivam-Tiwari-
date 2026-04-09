@@ -10,6 +10,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -41,10 +42,40 @@
     border-radius: var(--radius-sm);
   }
 
+  /* Interactions and Accessibility */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* Links and Focus */
   a {
     text-decoration: none;
     transition: color 0.2s ease-in-out;
+  }
+
+  /* Animated underline utility */
+  .animated-underline {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .animated-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.2s ease-out;
+  }
+
+  .animated-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    transition: transform 0.25s ease-out;
   }
 
   :focus-visible {

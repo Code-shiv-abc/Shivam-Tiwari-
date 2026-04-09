@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 // ─────────────────────────────────────────────
 // Module-level Intl.NumberFormat cache
@@ -62,6 +63,7 @@ export function AnimatedNumber({
   const [display, setDisplay] = useState(
     prefix + formatter.format(value) + suffix
   );
+  const [isFinished, setIsFinished] = useState(false);
 
   const rafRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -98,6 +100,8 @@ export function AnimatedNumber({
         } else {
           // Guarantee final value is exact
           setDisplay(prefix + formatter.format(value) + suffix);
+          setIsFinished(true);
+          setTimeout(() => setIsFinished(false), 600); // clear particles after 600ms
         }
       }
 
@@ -118,5 +122,43 @@ export function AnimatedNumber({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  return <span>{display}</span>;
+  return (
+    <motion.span
+      className="inline-block relative tabular-nums"
+      animate={isFinished && !reduceMotion ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+      transition={{ duration: 0.3, type: "spring", stiffness: 400, damping: 28 }}
+    >
+      {display}
+
+      {/* Particle effect on finish */}
+      {isFinished && !reduceMotion && (
+        <span className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <motion.span
+            initial={{ opacity: 1, y: 0, x: -10 }}
+            animate={{ opacity: 0, y: -20, x: -15 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="absolute text-brand-violet font-mono text-[14px]"
+          >
+            +1
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 1, y: 0, x: 0 }}
+            animate={{ opacity: 0, y: -25, x: 5 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="absolute text-brand-cyan font-mono text-[10px]"
+          >
+            +1
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 1, y: 0, x: 10 }}
+            animate={{ opacity: 0, y: -15, x: 20 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
+            className="absolute text-brand-amber font-mono text-[12px]"
+          >
+            +1
+          </motion.span>
+        </span>
+      )}
+    </motion.span>
+  );
 }
