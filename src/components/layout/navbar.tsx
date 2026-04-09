@@ -12,6 +12,21 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (href.startsWith('#')) {
+      const targetId = href.substring(1);
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.open(href, '_blank');
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -76,6 +91,7 @@ export function Navbar() {
                   <a
                     key={item.label}
                     href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className={cn(
                       "relative text-sm font-medium transition-colors duration-200",
                       isActive
@@ -101,7 +117,7 @@ export function Navbar() {
               Book a Call
             </Button>
             <button
-              className="md:hidden p-2 -mr-2 text-text-2 hover:text-text transition-colors"
+              className="md:hidden flex items-center justify-center p-2 -mr-2 text-text-2 hover:text-text transition-colors"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -133,7 +149,7 @@ export function Navbar() {
                 <span className="font-display font-semibold text-text">Menu</span>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 -mr-2 text-text-2 hover:text-text transition-colors"
+                  className="flex items-center justify-center p-2 -mr-2 text-text-2 hover:text-text transition-colors"
                   aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
@@ -145,7 +161,7 @@ export function Navbar() {
                   <a
                     key={item.label}
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => handleNavClick(e, item.href)}
                     className={cn(
                       "text-lg font-medium transition-colors",
                       activeSection === item.href.substring(1)

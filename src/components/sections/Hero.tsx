@@ -261,6 +261,7 @@ export function Hero() {
                     width:  ring.size,
                     height: ring.size,
                     border: `1px solid ${ring.color}`,
+                    willChange: "transform, opacity",
                   }}
                   animate={{ scale: [1, 1.06, 1], opacity: [0.6, 1, 0.6] }}
                   transition={{
@@ -312,7 +313,7 @@ export function Hero() {
               {...floatCard(0.7, reduced)}
               aria-hidden="true"
               className="absolute -top-4 -right-4 lg:-right-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))", willChange: "transform" }}
               animate={reduced ? {} : { y: [0, -8, 0] }}
               transition={{ duration: 6, ease: "easeInOut", repeat: Infinity, delay: 1.2 }}
             >
@@ -329,7 +330,7 @@ export function Hero() {
               {...floatCard(0.85, reduced)}
               aria-hidden="true"
               className="absolute -bottom-4 -left-4 lg:-left-8 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))", willChange: "transform" }}
               animate={reduced ? {} : { y: [0, 6, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 1.35 }}
             >
@@ -356,7 +357,7 @@ export function Hero() {
               {...floatCard(1.0, reduced)}
               aria-hidden="true"
               className="absolute -bottom-2 -right-4 lg:-right-6 px-3 py-2.5 rounded-[14px] border border-[var(--color-glass-border,rgba(255,255,255,0.08))] backdrop-blur-xl shadow-lg z-20 whitespace-nowrap"
-              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))" }}
+              style={{ background: "var(--color-glass-bg, rgba(13,15,26,0.80))", willChange: "transform" }}
               animate={reduced ? {} : { y: [0, -5, 0] }}
               transition={{ duration: 5.5, ease: "easeInOut", repeat: Infinity, delay: 1.5 }}
             >
@@ -383,8 +384,8 @@ export function Hero() {
       {/* Pulse keyframe for status dot */}
       <style jsx>{`
         @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.5; transform: scale(0.8); }
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.5; }
         }
       `}</style>
     </section>
