@@ -43,7 +43,7 @@ const CONTAINER_BG = {
 
 function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: boolean }) {
   const [ref, isVisible] = useScrollReveal();
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const Icon = ICONS[study.iconName];
 
   const [tiltStyle, setTiltStyle] = React.useState({ transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)" });
@@ -85,10 +85,10 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
 
   // Merge the refs
   const setRefs = React.useCallback(
-    (node: HTMLDivElement) => {
+    (node: HTMLDivElement | null) => {
       cardRef.current = node;
       if (typeof ref === "function") {
-        ref(node);
+        (ref as (instance: HTMLDivElement | null) => void)(node);
       } else if (ref) {
         (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
       }
