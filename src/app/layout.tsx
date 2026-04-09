@@ -27,6 +27,15 @@ const dmMono = DM_Mono({
   variable: "--font-dm-mono",
 });
 
+import type { Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: {
     default: `${SITE_CONFIG.name} - ${SITE_CONFIG.title}`,
