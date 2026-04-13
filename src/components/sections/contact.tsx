@@ -1,6 +1,6 @@
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Button } from "@/components/ui/button";
-import { SITE_CONFIG } from "@/lib/constants";
+import { SITE_CONFIG } from "@/lib/site-config";
 import { Calendar } from "lucide-react";
 
 export function Contact() {
