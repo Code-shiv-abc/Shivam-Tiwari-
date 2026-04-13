@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 
 export function Vision() {

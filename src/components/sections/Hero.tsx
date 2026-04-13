@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { Calendar, ArrowDown } from "lucide-react";
@@ -8,7 +8,7 @@ import { Calendar, ArrowDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AnimatedNumber } from "@/components/ui/animated-number";
-import { SITE_CONFIG } from "@/lib/config";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 // ─────────────────────────────────────────────
 // ANIMATION VARIANTS
@@ -173,8 +173,9 @@ export function Hero() {
           <motion.p
             {...fadeUp(0.6, reduced)}
             className="font-body text-[1.05rem] text-[var(--color-text-2)] max-w-[520px] leading-[1.75] mt-6"
-            dangerouslySetInnerHTML={{ __html: SITE_CONFIG.tagline }}
-          />
+          >
+            {SITE_CONFIG.tagline}
+          </motion.p>
 
           {/* 4. CTAs — 800ms */}
           <motion.div

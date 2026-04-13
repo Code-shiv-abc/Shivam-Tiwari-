@@ -8,7 +8,7 @@ import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedNumber } from "@/components/ui/animated-number";
-import { CASE_STUDIES, type CaseStudy } from "@/lib/constants";
+import { CASE_STUDIES, LOGO_WALL, type CaseStudy } from "@/lib/site-config";
 import { useScrollReveal, fadeUp, slideRight } from "@/lib/animations";
 
 const ICONS = {
@@ -109,10 +109,6 @@ function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: b
 }
 
 function LogoWall() {
-  const logos = [
-    "Acme Corp", "Global Tech", "Stark Ind", "Wayne Ent", "Cyberdyne", "Umbrella"
-  ];
-
   return (
     <div className="mt-24 w-full">
       <div className="text-center mb-8">
@@ -130,7 +126,7 @@ function LogoWall() {
         }}
       >
         <div className="flex lg:flex-wrap lg:justify-center overflow-x-auto pb-4 pt-2 -mx-4 px-4 gap-6 no-scrollbar snap-x">
-          {logos.map((name, i) => (
+          {LOGO_WALL.map((name, i) => (
             <div
               key={i}
               className="flex-shrink-0 snap-center flex items-center justify-center w-[160px] h-[70px] rounded-xl bg-surface-2 border border-border grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 cursor-default"
