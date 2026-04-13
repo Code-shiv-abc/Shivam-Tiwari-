@@ -1,4 +1,3 @@
-import React from "react";
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { Button } from "@/components/ui/button";
 import { SITE_CONFIG } from "@/lib/constants";
