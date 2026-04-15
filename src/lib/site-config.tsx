@@ -69,8 +69,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-export const LOGO_WALL = [
-  "Acme Corp", "Global Tech", "Stark Ind", "Wayne Ent", "Cyberdyne", "Umbrella"
+export const ANONYMIZED_CLIENTS = [
+  { name: "Series C FinTech — North America", icon: "Landmark" },
+  { name: "B2B SaaS Platform — APAC", icon: "Cloud" },
+  { name: "Healthcare Tech — Europe", icon: "HeartPulse" }
 ];
 
 export const SITE_CONFIG = {

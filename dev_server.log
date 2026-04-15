@@ -1,0 +1,135 @@
+
+> shivam-portfolio@1.0.0 dev
+> next dev
+
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 1809ms
+ ○ Compiling / ...
+ ✓ Compiled / in 17.1s (1586 modules)
+ ✓ Compiled in 417ms (756 modules)
+ GET / 200 in 18526ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.8s (1536 modules)
+ GET /images/shivam.jpg 404 in 4256ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 4258ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ ✓ Compiled in 1034ms (1546 modules)
+ GET / 200 in 251ms
+ ✓ Compiled /_not-found in 362ms (1536 modules)
+ ⨯ Error: Cannot find module './575.js'
+Require stack:
+- /app/.next/server/webpack-runtime.js
+- /app/.next/server/app/_not-found/page.js
+- /app/node_modules/next/dist/server/require.js
+- /app/node_modules/next/dist/server/load-components.js
+- /app/node_modules/next/dist/build/utils.js
+- /app/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/next/dist/server/config.js
+- /app/node_modules/next/dist/server/next.js
+- /app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/_not-found/page.js:1:1727)
+    at Object.<anonymous> (.next/server/app/_not-found/page.js:1:1776) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './575.js'
+Require stack:
+- /app/.next/server/webpack-runtime.js
+- /app/.next/server/app/_not-found/page.js
+- /app/node_modules/next/dist/server/require.js
+- /app/node_modules/next/dist/server/load-components.js
+- /app/node_modules/next/dist/build/utils.js
+- /app/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/next/dist/server/config.js
+- /app/node_modules/next/dist/server/next.js
+- /app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/_not-found/page.js:1:1727)
+    at Object.<anonymous> (.next/server/app/_not-found/page.js:1:1776) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.2s (1775 modules)
+ GET /images/shivam.jpg 500 in 7483ms
+ GET /images/shivam.jpg 500 in 7481ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/app/.next/cache/webpack/client-development-fallback/0.pack.gz_' -> '/app/.next/cache/webpack/client-development-fallback/0.pack.gz'
+ ✓ Compiled in 1565ms (1783 modules)
+ GET / 200 in 160ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 632ms (1773 modules)
+ ⨯ Error: Cannot find module './575.js'
+Require stack:
+- /app/.next/server/webpack-runtime.js
+- /app/.next/server/app/_not-found/page.js
+- /app/node_modules/next/dist/server/require.js
+- /app/node_modules/next/dist/server/load-components.js
+- /app/node_modules/next/dist/build/utils.js
+- /app/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/next/dist/server/config.js
+- /app/node_modules/next/dist/server/next.js
+- /app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/_not-found/page.js:1:1727)
+    at Object.<anonymous> (.next/server/app/_not-found/page.js:1:1776) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ⨯ Error: Cannot find module './575.js'
+Require stack:
+- /app/.next/server/webpack-runtime.js
+- /app/.next/server/app/_not-found/page.js
+- /app/node_modules/next/dist/server/require.js
+- /app/node_modules/next/dist/server/load-components.js
+- /app/node_modules/next/dist/build/utils.js
+- /app/node_modules/next/dist/build/swc/options.js
+- /app/node_modules/next/dist/build/swc/index.js
+- /app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /app/node_modules/next/dist/server/config.js
+- /app/node_modules/next/dist/server/next.js
+- /app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/_not-found/page.js:1:1727)
+    at Object.<anonymous> (.next/server/app/_not-found/page.js:1:1776) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array]
+}
+ ✓ Compiled /_error in 254ms (1775 modules)
+ GET /images/shivam.jpg 500 in 1049ms
+ GET /images/shivam.jpg 500 in 1039ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
