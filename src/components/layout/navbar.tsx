@@ -48,10 +48,13 @@ export function Navbar() {
       { rootMargin: "-40% 0px -55% 0px" }
     );
 
-    const sections = SITE_CONFIG.navItems
-      .filter((item) => item.href.startsWith("#"))
-      .map((item) => document.getElementById(item.href.substring(1)))
-      .filter(Boolean) as HTMLElement[];
+    const sections: HTMLElement[] = [];
+    for (const item of SITE_CONFIG.navItems) {
+      if (item.href.startsWith("#")) {
+        const el = document.getElementById(item.href.substring(1));
+        if (el) sections.push(el);
+      }
+    }
 
     sections.forEach((section) => observer.observe(section));
 
