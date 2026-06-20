@@ -63,6 +63,7 @@ export function AnimatedNumber({
     prefix + formatter.format(value) + suffix
   );
 
+  const spanRef = useRef<HTMLSpanElement>(null);
   const rafRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -91,13 +92,20 @@ export function AnimatedNumber({
         const eased = easeOutExpo(progress);
         const current = value * eased;
 
-        setDisplay(prefix + formatter.format(current) + suffix);
+        const formatted = prefix + formatter.format(current) + suffix;
+        if (spanRef.current) {
+          spanRef.current.textContent = formatted;
+        }
 
         if (progress < 1) {
           rafRef.current = requestAnimationFrame(tick);
         } else {
           // Guarantee final value is exact
-          setDisplay(prefix + formatter.format(value) + suffix);
+          const finalValue = prefix + formatter.format(value) + suffix;
+          if (spanRef.current) {
+            spanRef.current.textContent = finalValue;
+          }
+          setDisplay(finalValue);
         }
       }
 
@@ -118,5 +126,5 @@ export function AnimatedNumber({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  return <span>{display}</span>;
+  return <span ref={spanRef}>{display}</span>;
 }
