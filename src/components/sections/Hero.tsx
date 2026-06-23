@@ -216,20 +216,19 @@ export function Hero() {
               >
                 {/* Metric number */}
                 <div
-                  className={`font-display font-extrabold leading-none ${METRIC_COLORS[metric.color] ?? "text-[var(--color-brand-violet)]"}`}
+                  className={`font-display font-extrabold leading-none whitespace-nowrap ${METRIC_COLORS[metric.color] ?? "text-[var(--color-brand-violet)]"}`}
                   style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)" }}
                   aria-live="polite"
                 >
-                  <AnimatedNumber
-                    value={metric.value}
-                    prefix={metric.prefix}
-                    suffix={metric.suffix}
-                    decimals={metric.decimals ?? 0}
-                    duration={1800}
-                    startOnMount
-                    delay={1000 + index * 120}
-                    reduceMotion={reduced}
-                  />
+                  <div aria-label={`${metric.value} ${metric.label}`}>
+                    <AnimatedNumber
+                      value={metric.value}
+                      prefix={metric.prefix}
+                      suffix={metric.suffix}
+                      decimals={metric.decimals ?? 0}
+                      duration={1800}
+                    />
+                  </div>
                 </div>
                 {/* Metric label */}
                 <div className="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-[var(--color-text-3)] mt-2 leading-tight">
@@ -288,9 +287,9 @@ export function Hero() {
               <Image
                 src="/images/shivam.jpg"
                 alt="Shivam Tiwari — Engineering Leader"
-                fill
-                sizes="(max-width: 1024px) 280px, 420px"
-                className="object-cover object-top rounded-[24px]"
+                width={420}
+                height={420}
+                className="object-cover object-top rounded-[24px] w-full h-full"
                 priority
                 onError={() => setImgError(true)}
               />

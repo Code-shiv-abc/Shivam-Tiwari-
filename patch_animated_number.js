@@ -1,4 +1,5 @@
-"use client";
+const fs = require('fs');
+const content = `"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
@@ -94,12 +95,13 @@ export function AnimatedNumber({
       observer.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, prefix, suffix, decimals, duration, reduceMotion, finalString]);
 
   return (
-    <span ref={ref} aria-hidden="true" style={{ minWidth: '5ch' }}>
+    <span ref={ref} aria-hidden="true" style={{ display: 'inline-block', minWidth: '5ch' }}>
       {display}
     </span>
   );
 }
+`;
+fs.writeFileSync('src/components/ui/animated-number.tsx', content);
