@@ -16,9 +16,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       primary:
         "bg-brand-violet text-white hover:shadow-[0_0_20px_rgba(124,58,237,0.3)]",
       secondary:
-        "bg-transparent border border-brand-violet/30 text-brand-violet hover:border-brand-violet/60 hover:text-brand-violet-light", // Need a lighter violet or just keep it brand-violet
+        "bg-transparent border border-border text-text hover:border-brand-violet hover:text-white",
       ghost: "text-text-2 hover:text-text hover:bg-surface-2",
-      cta: "bg-gradient-to-r from-brand-violet to-brand-cyan text-white border-0 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.4)] animate-pulse hover:animate-none",
+      cta: "bg-gradient-to-r from-brand-violet to-brand-cyan text-white border-0 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.4)]",
     };
 
     return (

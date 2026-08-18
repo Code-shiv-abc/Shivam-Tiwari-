@@ -12,7 +12,7 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
@@ -23,7 +23,9 @@ export function Navbar() {
         elem.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      window.open(href, '_blank');
+      if (href.startsWith('http') || href.startsWith('/')) {
+        window.open(href, '_blank', 'noopener,noreferrer');
+      }
     }
   };
 
@@ -116,7 +118,7 @@ export function Navbar() {
 
           {/* Right: CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Button className="hidden md:inline-flex" variant="primary">
+            <Button className="hidden md:inline-flex" variant="primary" onClick={(e) => handleNavClick(e, "#contact")}>
               Book a Call
             </Button>
             <button

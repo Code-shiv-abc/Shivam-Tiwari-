@@ -42,6 +42,14 @@
   }
 
   /* Links and Focus */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+
   a {
     text-decoration: none;
     transition: color 0.2s ease-in-out;
