@@ -57,12 +57,12 @@ export function AnimatedNumber({
   reduceMotion = false,
 }: AnimatedNumberProps) {
   const formatter = getFormatter(decimals);
+  const finalString = prefix + formatter.format(value) + suffix;
 
-  // Render final value immediately for reduced motion or SSR
-  const [display, setDisplay] = useState(
-    prefix + formatter.format(value) + suffix
-  );
+  // Render final value immediately for SSR
+  const [display, setDisplay] = useState(finalString);
 
+  const spanRef = useRef<HTMLSpanElement>(null);
   const rafRef = useRef<number | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -71,7 +71,7 @@ export function AnimatedNumber({
   useEffect(() => {
     // Skip animation if reduced motion or not mounting
     if (reduceMotion || !startOnMount) {
-      setDisplay(prefix + formatter.format(value) + suffix);
+      setDisplay(finalString);
       return;
     }
 
@@ -91,13 +91,18 @@ export function AnimatedNumber({
         const eased = easeOutExpo(progress);
         const current = value * eased;
 
-        setDisplay(prefix + formatter.format(current) + suffix);
+        const currentString = prefix + formatter.format(current) + suffix;
+
+        // Bypass React render cycle, update DOM directly
+        if (spanRef.current) {
+          spanRef.current.textContent = currentString;
+        }
 
         if (progress < 1) {
           rafRef.current = requestAnimationFrame(tick);
         } else {
-          // Guarantee final value is exact
-          setDisplay(prefix + formatter.format(value) + suffix);
+          // Sync final value to React state
+          setDisplay(finalString);
         }
       }
 
@@ -114,9 +119,8 @@ export function AnimatedNumber({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-    // Only re-run if value changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [value, reduceMotion, startOnMount, duration, delay, finalString, prefix, suffix]);
 
-  return <span>{display}</span>;
+  return <span ref={spanRef}>{display}</span>;
 }
