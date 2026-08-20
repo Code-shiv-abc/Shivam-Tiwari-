@@ -2,4 +2,80 @@
 > shivam-portfolio@1.0.0 dev
 > next dev
 
-sh: 1: next: not found
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 1921ms
+ ○ Compiling / ...
+ ✓ Compiled / in 4s (1562 modules)
+ GET / 200 in 4725ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1138ms (1550 modules)
+ GET /images/shivam.jpg 404 in 1437ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 1437ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ ✓ Compiled in 4.8s (1562 modules)
+ ✓ Compiled in 846ms (1546 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 728ms (1550 modules)
+ GET / 404 in 1211ms
+ GET /_next/static/css/app/layout.css?v=1787194403868 404 in 145ms
+ GET /_next/static/media/bb3ef058b751a6ad-s.p.woff2 404 in 230ms
+ GET /_next/static/media/36966cca54120369-s.p.woff2 404 in 234ms
+ GET /_next/static/media/e4af272ccee01ff0-s.p.woff2 404 in 230ms
+ GET /_next/static/chunks/main-app.js?v=1787194403868 404 in 97ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 82ms
+ GET /_next/static/chunks/app/layout.js 404 in 56ms
+ GET / 200 in 193ms
+ GET /_next/static/css/app/layout.css?v=1787194538372 404 in 118ms
+ GET /images/shivam.jpg 404 in 75ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 55ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ GET /_next/static/media/36966cca54120369-s.p.woff2 404 in 304ms
+ GET /_next/static/media/bb3ef058b751a6ad-s.p.woff2 404 in 302ms
+ GET /_next/static/media/e4af272ccee01ff0-s.p.woff2 404 in 305ms
+ GET /_next/static/chunks/main-app.js?v=1787194538372 404 in 181ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 168ms
+ GET /_next/static/chunks/app/layout.js 404 in 155ms
+ GET /_next/static/chunks/app/page.js 404 in 30ms
+ GET / 200 in 71ms
+ GET /images/shivam.jpg 404 in 64ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /images/shivam.jpg 404 in 65ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET /_next/static/css/app/layout.css?v=1787194795748 404 in 75ms
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ GET /_next/static/chunks/main-app.js?v=1787194795748 404 in 189ms
+ GET /_next/static/chunks/webpack.js?v=1787194795748 404 in 191ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 189ms
+ GET /_next/static/chunks/app/layout.js 404 in 147ms
+ GET /_next/static/chunks/app/page.js 404 in 147ms
+ GET /images/shivam.jpg 404 in 70ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+ GET / 200 in 153ms
+ GET /_next/static/css/app/layout.css?v=1787195436747 404 in 89ms
+ GET /images/shivam.jpg 404 in 114ms
+ ⨯ The requested resource isn't a valid image for /images/shivam.jpg received text/html; charset=utf-8
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ GET /_next/static/chunks/webpack.js?v=1787195436747 404 in 231ms
+ GET /_next/static/chunks/main-app.js?v=1787195436747 404 in 230ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 185ms
+ GET /_next/static/chunks/app/layout.js 404 in 179ms
+ GET /_next/static/chunks/app/page.js 404 in 69ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1541ms (1792 modules)
+ GET / 404 in 1918ms
+ GET / 200 in 403ms
+ GET / 404 in 216ms
+ GET / 404 in 225ms
+ GET / 404 in 214ms

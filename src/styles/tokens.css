@@ -1,44 +1,38 @@
-/**
- * Design token variables mapped to CSS custom properties.
- * These tokens define the fundamental visual language of the application.
- */
-
 :root {
-  /* Colors */
-  --color-bg: #060612; /* deep dark background */
-  --color-surface: #0e0e1a; /* card / section backgrounds */
-  --color-surface-1: #0d0d1f;
-  --color-surface-2: #111127; /* nav/header, elevated surfaces */
-  --color-surface-3: #161630;
-  --color-border: rgba(255, 255, 255, 0.07); /* primary borders */
-  --color-border-soft: #1e1e30; /* subtle dividers */
+  /* Light Mode Colors */
+  --color-bg: #ffffff;
+  --color-surface: #f8fafc;
+  --color-border: #e2e8f0;
 
-  --color-accent: #7c3aed; /* primary violet for CTAs, highlights */
-  --color-accent-light: #a78bfa; /* lighter violet for text on dark */
-  --color-cyan: #06b6d4; /* secondary accent, technical feel */
-  --color-amber: #f59e0b; /* tertiary, warnings, callouts */
-  --color-green: #106981; /* success, metrics */
-  --color-red: #ef4444; /* errors, critical */
+  --color-primary: #0f172a;
+  --color-secondary: #475569;
+  --color-accent: #3b82f6;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
 
-  --color-brand-violet: #7c3aed;
-  --color-brand-cyan: #06b6d4;
-  --color-brand-emerald: #10b981;
-  --color-brand-amber: #f59e0b;
-  --color-brand-red: #ef4444;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
 
-  --color-text: #eeeef5; /* primary text */
-  --color-text-1: #f1f5f9;
-  --color-text-2: #94a3b8; /* secondary text */
-  --color-text-3: #606080; /* muted text, labels */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
 
-  /* Typography Scale is handled by mapping next/font variables to Tailwind in tailwind.config.ts */
-  /* --font-display: var(--font-syne) */
-  /* --font-body: var(--font-dm-sans) */
-  /* --font-mono: var(--font-dm-mono) */
+.dark {
+  /* Dark Mode Colors */
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-border: #27272a;
 
-  /* Border radius */
-  --radius-sm: 8px;
-  --radius: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --color-primary: #fafafa;
+  --color-secondary: #a1a1aa;
+  --color-accent: #3b82f6; /* Adjust for dark if needed, like #60a5fa */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  --color-text: #fafafa;
+  --color-text-muted: #a1a1aa;
 }
