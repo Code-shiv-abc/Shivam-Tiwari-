@@ -10,15 +10,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", rightIcon, children, ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center gap-2 rounded-lg font-medium px-5 py-2.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-violet focus-visible:ring-offset-2 focus-visible:ring-offset-background group";
+      "inline-flex items-center justify-center gap-2 rounded-lg font-medium px-5 py-2.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background group cursor-pointer";
 
     const variants = {
       primary:
-        "bg-brand-violet text-white hover:shadow-[0_0_20px_rgba(124,58,237,0.3)]",
+        "bg-accent text-white hover:bg-accent/90 hover:shadow-[0_0_20px_var(--color-accent)]",
       secondary:
-        "bg-transparent border border-border text-text hover:border-brand-violet hover:text-white",
-      ghost: "text-text-2 hover:text-text hover:bg-surface-2",
-      cta: "bg-gradient-to-r from-brand-violet to-brand-cyan text-white border-0 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(124,58,237,0.4)]",
+        "bg-transparent border border-border text-foreground hover:border-accent hover:text-accent",
+      ghost: "text-muted-foreground hover:text-foreground hover:bg-surface",
+      cta: "bg-foreground text-background hover:bg-foreground/90 hover:scale-[1.02] hover:shadow-lg",
     };
 
     return (

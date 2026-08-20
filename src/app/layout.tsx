@@ -1,33 +1,28 @@
 import "../styles/tokens.css";
 import "./globals.css";
-import type { Metadata } from "next";
-import { Syne, DM_Sans, DM_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SITE_CONFIG } from "@/lib/site-config";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-// Initialize fonts
-const syne = Syne({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-syne",
+  variable: "--font-space-grotesk",
 });
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-dm-sans",
+  variable: "--font-inter",
 });
 
-const dmMono = DM_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-dm-mono",
+  variable: "--font-jetbrains-mono",
 });
-
-import type { Viewport } from "next";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -79,18 +74,25 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={cn(
-          syne.variable,
-          dmSans.variable,
-          dmMono.variable,
-          "min-h-screen font-body antialiased flex flex-col selection:bg-accent/30"
+          spaceGrotesk.variable,
+          inter.variable,
+          jetbrainsMono.variable,
+          "min-h-screen antialiased flex flex-col bg-background text-foreground"
         )}
       >
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </ThemeProvider>
         <Script
           id="json-ld"
           type="application/ld+json"
