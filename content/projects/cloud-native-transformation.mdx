@@ -1,0 +1,45 @@
+---
+title: "$2M Annual Savings Through Cloud-Native Migration"
+category: "Business & Infrastructure"
+status: "Live"
+heroImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000"
+date: "2024-05-20"
+techStack: ["AWS", "Terraform", "Docker", "Datadog"]
+---
+
+## Project Overview
+
+Legacy on-premise infrastructure was costing $3.2M/year, causing reliability issues, and blocking the team from adopting modern engineering practices.
+
+## The Problem
+
+The company's aging data center infrastructure was expensive to maintain and difficult to scale. Hardware provisioning took weeks, stifling innovation. Uptime was hovering around 99.5%, leading to frequent customer complaints during peak traffic events.
+
+## The Solution
+
+Led a full cloud migration initiative: vendor evaluation, architectural redesign, phased migration with zero production incidents, and SRE team formation to maintain the new infrastructure.
+
+### Architecture
+
+We designed a multi-AZ, highly available architecture on AWS. Monolithic applications were containerized using Docker and orchestrated with Kubernetes (EKS). We implemented Infrastructure as Code (IaC) using Terraform for all environments.
+
+### Technical Decisions
+
+- **AWS EKS:** Chosen for its managed Kubernetes control plane, reducing operational overhead.
+- **Terraform:** Selected over CloudFormation for its multi-cloud capabilities and extensive provider ecosystem.
+- **Datadog:** Implemented as the unified observability platform for metrics, traces, and logs.
+
+## Challenges
+
+The most critical challenge was migrating the legacy MySQL database with minimal downtime. We used AWS Database Migration Service (DMS) for continuous replication and executed the final cutover during a carefully planned maintenance window, resulting in only 5 minutes of total read-only time.
+
+## Tradeoffs
+
+We opted for a "lift-and-shift with containerization" approach for some legacy services rather than a full cloud-native rewrite. This tradeoff allowed us to exit the data center 6 months ahead of schedule, realizing the cost savings sooner, at the cost of carrying some technical debt that we addressed in subsequent quarters.
+
+
+### Gallery
+
+![Gallery Image 1](https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80)
+
+![Gallery Image 2](https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80)

@@ -1,0 +1,46 @@
+---
+title: "40% Faster Releases Through Micro-Frontend Architecture"
+category: "Technical Architecture"
+status: "Open Source"
+heroImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=2000"
+date: "2024-02-15"
+techStack: ["Next.js", "Module Federation", "TypeScript", "Tailwind CSS"]
+githubUrl: "https://github.com/shivamtiwari/micro-frontend-core"
+---
+
+## Project Overview
+
+A monolithic frontend was causing 6-hour deploys, cross-team conflicts, and 3× more regressions than the industry average. We needed a way to decouple teams and accelerate delivery.
+
+## The Problem
+
+The legacy React monolith had grown to over 1 million lines of code. Any change, no matter how small, required a full build and test suite run that took hours. Teams were constantly stepping on each other's toes, causing merge conflicts and delaying releases. The "release train" model meant that a single failing test in one domain blocked releases for everyone else.
+
+## The Solution
+
+I pioneered company-wide adoption of micro-frontends. Created the migration playbook, built the shared infrastructure, and led a 12-person platform team through a zero-downtime transition.
+
+### Architecture
+
+We utilized Webpack Module Federation to split the monolith into 15 independently deployable applications. A core "shell" application was responsible for routing, authentication, and layout, while domain teams owned their specific micro-frontends.
+
+### Technical Decisions
+
+- **Webpack Module Federation:** Chosen over IFrames or build-time integration for its dynamic runtime loading capabilities.
+- **Shared Component Library:** Extracted common UI components into a separate package to ensure visual consistency across independent apps.
+- **Contract Testing:** Implemented strict contract tests between the host shell and remote apps to prevent breaking changes.
+
+## Challenges
+
+Managing shared state (like user authentication and global settings) across independent React trees was complex. We solved this by implementing a lightweight, event-driven architecture using CustomEvents, ensuring micro-frontends remained decoupled while still being able to communicate essential state changes.
+
+## Tradeoffs
+
+The micro-frontend architecture introduced complexity in local development and CI/CD. Teams had to learn new tooling, and the initial setup overhead was significant. However, the tradeoff paid off immensely: deployment times dropped from 6 hours to 45 minutes, and regression rates plummeted.
+
+
+### Gallery
+
+![Gallery Image 1](https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80)
+
+![Gallery Image 2](https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80)
