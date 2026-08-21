@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 
 // ─────────────────────────────────────────────
 // Module-level Intl.NumberFormat cache
@@ -38,12 +39,11 @@ interface AnimatedNumberProps {
   suffix?: string;
   decimals?: number;
   duration?: number;
-  /** Fire counter on mount after `delay` ms. Default: true */
-  startOnMount?: boolean;
-  /** Delay in ms before counter starts. Default: 0 */
+  /** Delay in ms before counter starts after entering viewport. Default: 0 */
   delay?: number;
   /** If true, skip animation and show final value immediately */
   reduceMotion?: boolean;
+  startOnMount?: boolean;
 }
 
 export function AnimatedNumber({
@@ -52,7 +52,6 @@ export function AnimatedNumber({
   suffix = "",
   decimals = 0,
   duration = 1800,
-  startOnMount = true,
   delay = 0,
   reduceMotion = false,
 }: AnimatedNumberProps) {
@@ -68,15 +67,17 @@ export function AnimatedNumber({
   const startTimeRef = useRef<number | null>(null);
   const hasStarted = useRef(false);
 
+  const isInView = useInView(spanRef, { once: true, amount: 0.5 });
+
   useEffect(() => {
-    // Skip animation if reduced motion or not mounting
-    if (reduceMotion || !startOnMount) {
+    // Skip animation if reduced motion
+    if (reduceMotion) {
       setDisplay(finalString);
       return;
     }
 
-    // Prevent double-firing in StrictMode
-    if (hasStarted.current) return;
+    // Only start if it hasn't started and is in view
+    if (hasStarted.current || !isInView) return;
 
     function runCounter() {
       hasStarted.current = true;
@@ -120,7 +121,7 @@ export function AnimatedNumber({
       if (timerRef.current) clearTimeout(timerRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, reduceMotion, startOnMount, duration, delay, finalString, prefix, suffix]);
+  }, [value, reduceMotion, duration, delay, finalString, prefix, suffix, isInView]);
 
   return <span ref={spanRef}>{display}</span>;
 }

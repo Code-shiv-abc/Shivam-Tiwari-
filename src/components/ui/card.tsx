@@ -1,10 +1,13 @@
+"use client";
+
 import React from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   accentColor?: "violet" | "cyan" | "emerald" | "amber" | "red" | "none";
   hoverable?: boolean;
-  padding?: "sm" | "md" | "lg";
+  padding?: "sm" | "md" | "lg" | "none";
 }
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -12,7 +15,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     {
       className,
       accentColor = "none",
-      hoverable = false,
+      hoverable = true,
       padding = "md",
       children,
       ...props
@@ -23,6 +26,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       sm: "p-4",
       md: "p-7",
       lg: "p-10",
+      none: "",
     };
 
     const accentGradients = {
@@ -34,21 +38,32 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       none: "",
     };
 
+    const MotionDiv = motion.div as any;
+
     return (
-      <div
+      <MotionDiv
         ref={ref}
+        whileHover={hoverable ? { scale: 1.02, y: -6 } : undefined}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
         className={cn(
-          "relative bg-surface border border-border rounded-[14px] overflow-hidden group",
-          hoverable &&
-            "transition-all duration-300 ease-out hover:-translate-y-[4px] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]",
+          "relative group overflow-hidden rounded-2xl sm:rounded-[2rem]",
+          "bg-background/80 backdrop-blur-md",
+          "border border-border/50",
+          "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+          "dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)]",
+          "transition-colors duration-300",
           paddings[padding],
           className
         )}
         {...props}
       >
+        {/* Soft glowing background layer - only visible on hover */}
         {hoverable && (
-          <div className="absolute inset-0 bg-white/[0.02] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 pointer-events-none" />
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden">
+            <div className="absolute -inset-[100%] bg-[radial-gradient(circle_at_50%_50%,var(--color-accent)_0%,transparent_50%)] opacity-20 blur-3xl" />
+          </div>
         )}
+
         {accentColor !== "none" && (
           <div
             className={cn(
@@ -57,8 +72,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
             )}
           />
         )}
+
+        {/* Card content */}
         <div className="relative z-10">{children}</div>
-      </div>
+      </MotionDiv>
     );
   }
 );

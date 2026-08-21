@@ -3,6 +3,7 @@
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { motion } from "framer-motion";
 import { useScrollReveal, fadeUp } from "@/lib/animations";
+import { AnimatedText } from "@/components/ui/animated-text";
 
 export function Vision() {
   const [ref, isVisible] = useScrollReveal();
@@ -11,8 +12,8 @@ export function Vision() {
     <SectionWrapper
       id="vision"
       label="VISION"
-      title="Engineering"
-      titleAccent="Philosophy"
+      title={<AnimatedText text="Engineering" mode="word" />}
+      titleAccent={<AnimatedText text="Philosophy" mode="word" delay={0.2} />}
     >
             <motion.div
         ref={ref as any}

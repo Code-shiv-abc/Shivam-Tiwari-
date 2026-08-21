@@ -3,6 +3,8 @@
 import { SectionWrapper } from "@/components/ui/section-wrapper";
 import { motion } from "framer-motion";
 import { useScrollReveal, fadeUp } from "@/lib/animations";
+import { AnimatedText } from "@/components/ui/animated-text";
+import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
 
 export function Writing() {
   const [ref, isVisible] = useScrollReveal();
