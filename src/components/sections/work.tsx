@@ -2,113 +2,14 @@
 
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { Users, Layers, Cloud } from "lucide-react";
 
 import { SectionWrapper } from "@/components/ui/section-wrapper";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AnimatedNumber } from "@/components/ui/animated-number";
+import { ProjectCard } from "@/components/ui/project-card";
 import { CASE_STUDIES, LOGO_WALL, type CaseStudy } from "@/lib/site-config";
 import { useScrollReveal, fadeUp, slideRight } from "@/lib/animations";
 import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
 import { AnimatedText } from "@/components/ui/animated-text";
 
-const ICONS = {
-  Users: Users,
-  Layers: Layers,
-  Cloud: Cloud,
-};
-
-const ACCENT_COLORS = {
-  violet: "text-brand-violet",
-  cyan: "text-brand-cyan",
-  emerald: "text-brand-emerald",
-  amber: "text-brand-amber",
-  red: "text-brand-red",
-};
-
-const GLOW_COLORS = {
-  violet: "shadow-[0_0_15px_rgba(124,58,237,0.5)]",
-  cyan: "shadow-[0_0_15px_rgba(6,182,212,0.5)]",
-  emerald: "shadow-[0_0_15px_rgba(16,185,129,0.5)]",
-  amber: "shadow-[0_0_15px_rgba(245,158,11,0.5)]",
-  red: "shadow-[0_0_15px_rgba(239,68,68,0.5)]",
-};
-
-const CONTAINER_BG = {
-  violet: "bg-brand-violet/10",
-  cyan: "bg-brand-cyan/10",
-  emerald: "bg-brand-emerald/10",
-  amber: "bg-brand-amber/10",
-  red: "bg-brand-red/10",
-};
-
-function CaseStudyCard({ study, isHero = false }: { study: CaseStudy; isHero?: boolean }) {
-  const [ref, isVisible] = useScrollReveal();
-  const Icon = ICONS[study.iconName];
-
-  return (
-    <Card
-      ref={ref as any}
-      hoverable
-      padding="lg"
-      accentColor={study.accentColor}
-      className={`flex flex-col h-full ${isHero ? "lg:col-span-2 lg:flex-row lg:items-stretch lg:gap-10" : "lg:col-span-1"}`}
-    >
-      <div className={`flex flex-col flex-1 ${isHero ? "lg:w-[60%]" : ""}`}>
-        <div className="flex items-center gap-4 mb-6">
-          <Badge variant={study.accentColor}>{study.category}</Badge>
-          <span className="font-mono text-[10px] uppercase text-text-3 tracking-[0.1em]">{study.eyebrow}</span>
-        </div>
-
-        <div className="flex gap-5 mb-6">
-          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:${GLOW_COLORS[study.accentColor]} ${CONTAINER_BG[study.accentColor]}`}>
-            <Icon size={24} className={ACCENT_COLORS[study.accentColor]} />
-          </div>
-          <h3 className="font-display font-bold text-[20px] md:text-[24px] text-text leading-tight mt-1">{study.title}</h3>
-        </div>
-
-        <p className="font-body text-[14px] text-text-2 leading-[1.8] mb-6 max-w-xl">{study.challenge}</p>
-
-        <div className="mb-8 flex-1">
-          <span className={`font-mono text-[10px] uppercase tracking-[0.1em] block mb-2 ${ACCENT_COLORS[study.accentColor]}`}>
-            THE APPROACH →
-          </span>
-          <p className="font-body text-[14px] text-text-2 max-w-xl">{study.approach}</p>
-        </div>
-
-      </div>
-
-      <div className={`mt-8 pt-8 border-t border-border flex ${isHero ? "lg:mt-0 lg:pt-0 lg:border-t-0 lg:border-l lg:border-border-soft lg:pl-10 lg:w-[40%] lg:flex-col lg:justify-center lg:gap-8" : "flex-row flex-wrap gap-y-6"} gap-x-8`}>
-        {study.metrics.map((metric, i) => (
-          <div key={metric.label} className={isHero ? "" : "flex-1 min-w-[30%]"}>
-            <div className={`font-display font-extrabold text-[32px] leading-none mb-2 ${ACCENT_COLORS[study.accentColor]}`}>
-              {isVisible ? (
-                <AnimatedNumber
-                  value={metric.value}
-                  prefix={metric.prefix}
-                  suffix={metric.suffix}
-                  duration={1800}
-                />
-              ) : (
-                "0"
-              )}
-            </div>
-            <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-3">
-              {metric.label}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className={`flex flex-wrap gap-2 ${isHero ? "lg:absolute lg:bottom-10 lg:left-10" : "mt-8"}`}>
-        {study.tags.map((tag) => (
-          <Badge key={tag} variant="ghost" size="sm">{tag}</Badge>
-        ))}
-      </div>
-    </Card>
-  );
-}
 
 function LogoWall() {
   return (
@@ -170,13 +71,13 @@ export function Work() {
 
       <StaggerReveal className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <StaggerItem className="lg:col-span-2">
-          <CaseStudyCard study={CASE_STUDIES[0]} isHero />
+          <ProjectCard study={CASE_STUDIES[0]} isHero />
         </StaggerItem>
         <StaggerItem>
-          <CaseStudyCard study={CASE_STUDIES[1]} />
+          <ProjectCard study={CASE_STUDIES[1]} />
         </StaggerItem>
         <StaggerItem>
-          <CaseStudyCard study={CASE_STUDIES[2]} />
+          <ProjectCard study={CASE_STUDIES[2]} />
         </StaggerItem>
       </StaggerReveal>
 

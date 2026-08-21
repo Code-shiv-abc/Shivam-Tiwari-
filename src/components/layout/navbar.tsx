@@ -18,18 +18,32 @@ export function Navbar() {
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
     href: string
   ) => {
-    e.preventDefault();
     setIsMobileMenuOpen(false);
 
     if (href.startsWith("#")) {
+      const isHome = window.location.pathname === "/";
+      if (!isHome) {
+        // Just let default navigation happen if we are not on the homepage
+        // However, we need to append the / before the hash if it's not there,
+        // Actually, the easiest way is to set window.location.href
+        e.preventDefault();
+        window.location.href = "/" + href;
+        return;
+      }
+      e.preventDefault();
       const targetId = href.substring(1);
       const elem = document.getElementById(targetId);
       if (elem) {
         elem.scrollIntoView({ behavior: "smooth" });
       }
     } else {
+      e.preventDefault();
       if (href.startsWith("http") || href.startsWith("/")) {
-        window.open(href, "_blank", "noopener,noreferrer");
+        if (href.startsWith("/")) {
+           window.location.href = href;
+        } else {
+           window.open(href, "_blank", "noopener,noreferrer");
+        }
       }
     }
   };

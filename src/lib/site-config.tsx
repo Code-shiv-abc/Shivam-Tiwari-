@@ -10,6 +10,8 @@ export interface CaseStudyMetric {
 }
 
 export interface CaseStudy {
+  slug: string;
+  status: "Live" | "In Progress" | "Open Source";
   category: string;
   accentColor: "violet" | "cyan" | "emerald" | "amber" | "red";
   iconName: "Users" | "Layers" | "Cloud";
@@ -23,6 +25,8 @@ export interface CaseStudy {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    slug: "scaling-engineering-org",
+    status: "Live",
     category: "Strategic Leadership",
     accentColor: "violet",
     iconName: "Users",
@@ -38,6 +42,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ["Org Design", "Distributed Teams", "Engineering Culture"],
   },
   {
+    slug: "micro-frontend-migration",
+    status: "Open Source",
     category: "Technical Architecture",
     accentColor: "cyan",
     iconName: "Layers",
@@ -53,6 +59,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ["Micro-Frontends", "Platform Engineering", "DevEx"],
   },
   {
+    slug: "cloud-native-transformation",
+    status: "Live",
     category: "Business & Infrastructure",
     accentColor: "emerald",
     iconName: "Cloud",
