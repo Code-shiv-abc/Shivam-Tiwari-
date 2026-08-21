@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import { CASE_STUDIES, LOGO_WALL, type CaseStudy } from "@/lib/site-config";
 import { useScrollReveal, fadeUp, slideRight } from "@/lib/animations";
+import { StaggerReveal, StaggerItem } from "@/components/ui/stagger-reveal";
+import { AnimatedText } from "@/components/ui/animated-text";
 
 const ICONS = {
   Users: Users,
@@ -125,16 +127,16 @@ function LogoWall() {
           WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)"
         }}
       >
-        <div className="flex lg:flex-wrap lg:justify-center overflow-x-auto pb-4 pt-2 -mx-4 px-4 gap-6 no-scrollbar snap-x">
+        <StaggerReveal className="flex lg:flex-wrap lg:justify-center overflow-x-auto pb-4 pt-2 -mx-4 px-4 gap-6 no-scrollbar snap-x">
           {LOGO_WALL.map((name, i) => (
-            <div
+            <StaggerItem
               key={i}
               className="flex-shrink-0 snap-center flex items-center justify-center w-[160px] h-[70px] rounded-xl bg-surface-2 border border-border grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 cursor-default"
             >
               <span className="font-display font-bold text-text-2 tracking-tight">{name}</span>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerReveal>
       </div>
     </div>
   );
@@ -150,8 +152,8 @@ export function Work() {
     <SectionWrapper
       id="work"
       label="IMPACT"
-      title="Work That"
-      titleAccent="Moved the Needle"
+      title={<AnimatedText text="Work That" mode="word" />}
+      titleAccent={<AnimatedText text="Moved the Needle" mode="word" delay={0.2} />}
     >
       <motion.div
         ref={headerRef as any}
@@ -166,38 +168,17 @@ export function Work() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <motion.div
-          ref={card1Ref as any}
-          initial="hidden"
-          animate={card1Visible ? "visible" : "hidden"}
-          variants={slideRight}
-          transition={{ delay: 0.2 }}
-          className="lg:col-span-2"
-        >
+      <StaggerReveal className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <StaggerItem className="lg:col-span-2">
           <CaseStudyCard study={CASE_STUDIES[0]} isHero />
-        </motion.div>
-
-        <motion.div
-          ref={card2Ref as any}
-          initial="hidden"
-          animate={card2Visible ? "visible" : "hidden"}
-          variants={fadeUp}
-          transition={{ delay: 0.3 }}
-        >
+        </StaggerItem>
+        <StaggerItem>
           <CaseStudyCard study={CASE_STUDIES[1]} />
-        </motion.div>
-
-        <motion.div
-          ref={card3Ref as any}
-          initial="hidden"
-          animate={card3Visible ? "visible" : "hidden"}
-          variants={fadeUp}
-          transition={{ delay: 0.4 }}
-        >
+        </StaggerItem>
+        <StaggerItem>
           <CaseStudyCard study={CASE_STUDIES[2]} />
-        </motion.div>
-      </div>
+        </StaggerItem>
+      </StaggerReveal>
 
       <LogoWall />
 

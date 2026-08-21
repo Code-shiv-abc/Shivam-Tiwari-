@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-interface SectionWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface SectionWrapperProps extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
   id: string;
   label: string;
-  title: string;
-  titleAccent?: string;
+  title: React.ReactNode;
+  titleAccent?: React.ReactNode;
 }
 
 export const SectionWrapper = React.forwardRef<HTMLElement, SectionWrapperProps>(
@@ -25,12 +25,20 @@ export const SectionWrapper = React.forwardRef<HTMLElement, SectionWrapperProps>
             {label}
           </span>
           <div className="w-12 h-px bg-gradient-to-r from-brand-violet to-transparent opacity-30 mb-3" />
-          <h2 className="font-display font-extrabold text-[clamp(24px,3.5vw,40px)] tracking-[-0.02em] text-text">
-            {title}{" "}
+          <h2 className="font-display font-extrabold text-[clamp(24px,3.5vw,40px)] tracking-[-0.02em] text-text flex flex-wrap gap-x-2">
+            <span>{title}</span>
             {titleAccent && (
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-violet to-brand-cyan">
-                {titleAccent}
-              </span>
+              typeof titleAccent === 'string' ? (
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-violet to-brand-cyan inline-block">
+                  {titleAccent}
+                </span>
+              ) : (
+                React.isValidElement<{ className?: string }>(titleAccent) && titleAccent.type !== React.Fragment
+                  ? React.cloneElement(titleAccent, {
+                      className: cn(titleAccent.props.className, "text-transparent bg-clip-text bg-gradient-to-r from-brand-violet to-brand-cyan")
+                    })
+                  : titleAccent
+              )
             )}
           </h2>
         </div>
